@@ -1,0 +1,2 @@
+P001,Patient User,Male,0123456793,patient@clinic.com,30,O+,123 Main St,999-9999
+P002,Jane Doe,Female,0123456794,jane@example.com,25,A-,456 Oak Ave,888-8888

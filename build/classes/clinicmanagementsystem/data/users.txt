@@ -1,0 +1,4 @@
+U001,Admin User,Male,0123456789,admin@clinic.com,admin,admin123,Admin
+U002,Doctor User,Female,0123456790,doctor@clinic.com,doctor,doctor123,Doctor
+U003,Nurse User,Female,0123456791,nurse@clinic.com,nurse,nurse123,Nurse
+U004,Receptionist User,Male,0123456792,reception@clinic.com,reception,reception123,Receptionist

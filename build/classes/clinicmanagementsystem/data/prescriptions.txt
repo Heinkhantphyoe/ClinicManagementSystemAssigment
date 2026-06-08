@@ -1,0 +1,2 @@
+PR001,P001,U002,Paracetamol,500mg,Take twice a day
+PR002,P002,U002,Amoxicillin,250mg,Take three times a day for 5 days

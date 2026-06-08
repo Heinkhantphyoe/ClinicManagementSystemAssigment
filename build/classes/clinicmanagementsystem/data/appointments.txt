@@ -1,0 +1,2 @@
+A001,P001,U002,2026-06-10,10:00,Scheduled,Routine checkup
+A002,P002,U002,2026-06-11,11:30,Scheduled,Follow-up visit

@@ -1,0 +1,2 @@
+MR001,P001,U002,Common Cold,Rest and fluids,2026-05-20
+MR002,P002,U002,Slight Fever,Paracetamol and rest,2026-05-22

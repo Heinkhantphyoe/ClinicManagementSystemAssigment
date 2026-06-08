@@ -1,0 +1,3 @@
+R001,U002,Doctor,2026-06-04,Morning
+R002,U003,Nurse,2026-06-04,Morning
+R003,U004,Receptionist,2026-06-04,Full Day
