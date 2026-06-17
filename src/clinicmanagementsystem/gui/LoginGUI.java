@@ -7,6 +7,7 @@ package clinicmanagementsystem.gui;
 import clinicmanagementsystem.model.User;
 import clinicmanagementsystem.service.LoginService;
 import clinicmanagementsystem.util.FileManager;
+import clinicmanagementsystem.util.SessionManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,6 +131,7 @@ public class LoginGUI extends javax.swing.JFrame {
                 return;
             }
 
+            SessionManager.setCurrentUser(loggedInUser);
             openDashboard(loggedInUser.getRole());
         } catch (IOException ex) {
             logger.log(java.util.logging.Level.SEVERE, "Unable to read users file.", ex);

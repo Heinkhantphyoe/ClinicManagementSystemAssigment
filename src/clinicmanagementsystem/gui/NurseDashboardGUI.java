@@ -4,6 +4,12 @@
  */
 package clinicmanagementsystem.gui;
 
+import clinicmanagementsystem.gui.nurse.AppointmentForm;
+import clinicmanagementsystem.gui.nurse.RosterForm;
+import clinicmanagementsystem.gui.nurse.StatusForm;
+import clinicmanagementsystem.gui.nurse.VitalsForm;
+import clinicmanagementsystem.util.SessionManager;
+
 /**
  *
  * @author PC
@@ -97,28 +103,29 @@ public class NurseDashboardGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRoasterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRoasterActionPerformed
-
+        new RosterForm().setVisible(true);
     }//GEN-LAST:event_btnRoasterActionPerformed
 
     private void btnAppointmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAppointmentsActionPerformed
-
+        new AppointmentForm().setVisible(true);
     }//GEN-LAST:event_btnAppointmentsActionPerformed
 
     private void btnVitalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVitalsActionPerformed
-
+        new VitalsForm().setVisible(true);
     }//GEN-LAST:event_btnVitalsActionPerformed
 
     private void btnStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatusActionPerformed
-
+        new StatusForm().setVisible(true);
     }//GEN-LAST:event_btnStatusActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-
-
+        SessionManager.clear();
+        new LoginGUI().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
