@@ -25,7 +25,15 @@ public class FileManager {
                 if (eachLine.trim().isEmpty()) {
                     continue;
                 }
-                String[] eachLineValue = eachLine.split(",");
+                String[] eachLineValue = eachLine.split(",", -1);
+                int expectedCols = model.getColumnCount();
+                if (expectedCols > 0 && eachLineValue.length < expectedCols) {
+                    String[] padded = new String[expectedCols];
+                    for (int i = 0; i < expectedCols; i++) {
+                        padded[i] = (i < eachLineValue.length) ? eachLineValue[i] : "";
+                    }
+                    eachLineValue = padded;
+                }
                 model.addRow(eachLineValue);
             }
             br.close();
