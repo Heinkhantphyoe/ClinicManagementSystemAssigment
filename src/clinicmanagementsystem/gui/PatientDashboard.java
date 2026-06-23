@@ -170,9 +170,12 @@ public class PatientDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        SessionManager.setCurrentPatient(null);
-        new PatientLoginGUI().setVisible(true);
-        this.dispose();
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout Confirmation", javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE);
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            SessionManager.setCurrentPatient(null);
+            new PatientLoginGUI().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed

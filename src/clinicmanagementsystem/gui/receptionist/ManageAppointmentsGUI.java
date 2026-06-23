@@ -4,12 +4,19 @@
  */
 package clinicmanagementsystem.gui.receptionist;
 
-/**
- *
- * @author Acer
- */
+import clinicmanagementsystem.gui.ReceptionistDashboardGUI;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class ManageAppointmentsGUI extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ManageAppointmentsGUI.class.getName());
 
     /**
@@ -17,6 +24,83 @@ public class ManageAppointmentsGUI extends javax.swing.JFrame {
      */
     public ManageAppointmentsGUI() {
         initComponents();
+        loadAppointments();
+    }
+
+    private void clearFields() {
+        txtAppointmentID.setText("");
+        txtPatientID.setText("");
+        txtDoctorID.setText("");
+        txtNurseID.setText("");
+        txtDate.setText("");
+        txtTime.setText("");
+        jTextField1.setText("");
+        cmbAppointmentType.setSelectedIndex(0);
+        txtStatus.setSelectedIndex(0);
+        jTable1.clearSelection();
+
+    }
+
+    private void loadAppointments() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        try {
+            BufferedReader br = new BufferedReader(
+                    new FileReader("src/clinicmanagementsystem/data/appointments.txt")
+            );
+
+            String line;
+            boolean isFirstLine = true;
+
+            while ((line = br.readLine()) != null) {
+                if (isFirstLine && line.toLowerCase().startsWith("apptid")) {
+                    isFirstLine = false;
+                    continue;
+                }
+                isFirstLine = false;
+
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+
+                String[] data = line.split(",", -1);
+                String[] padded = new String[9];
+                for (int i = 0; i < 9; i++) {
+                    padded[i] = (i < data.length) ? data[i] : "";
+                }
+                model.addRow(new Object[]{padded[0], padded[1], padded[2], padded[3], padded[4], padded[5], padded[6], padded[8], padded[7]});
+            }
+
+            br.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean validateInput() {
+        if (txtAppointmentID.getText().trim().isEmpty() ||
+            txtPatientID.getText().trim().isEmpty() ||
+            txtDate.getText().trim().isEmpty() ||
+            txtTime.getText().trim().isEmpty()) {
+            
+            JOptionPane.showMessageDialog(this, "Appointment ID, Patient ID, Date, and Time are required.");
+            return false;
+        }
+
+        if (!txtDate.getText().trim().matches("^\\d{4}-\\d{2}-\\d{2}$")) {
+            JOptionPane.showMessageDialog(this, "Date must be in YYYY-MM-DD format.");
+            return false;
+        }
+
+        String time = txtTime.getText().trim();
+        if (!time.matches("^([01]?\\d|2[0-3]):[0-5]\\d$")) {
+            JOptionPane.showMessageDialog(this, "Time must be in HH:MM format (e.g., 14:30).");
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -28,21 +112,599 @@ public class ManageAppointmentsGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtAppointmentID = new javax.swing.JTextField();
+        txtPatientID = new javax.swing.JTextField();
+        txtDate = new javax.swing.JTextField();
+        txtTime = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnAdd = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        cmbAppointmentType = new javax.swing.JComboBox<>();
+        txtCancel = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtDoctorID = new javax.swing.JTextField();
+        txtStatus = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        txtNurseID = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("AppointmentID");
+
+        jLabel2.setText("PatientID");
+
+        jLabel4.setText("Date");
+
+        jLabel5.setText("Time");
+
+        jLabel6.setText("Status");
+
+        txtDate.addActionListener(this::txtDateActionPerformed);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Appointment ID", "Patient ID", "Doctor ID", "Nruse ID", "Date", "Time", "Appointment Type", "Reason / Symptoms", "Status"
+            }
+        ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(7).setResizable(false);
+            jTable1.getColumnModel().getColumn(8).setHeaderValue("Status");
+        }
+
+        btnAdd.setText("Add");
+        btnAdd.addActionListener(this::btnAddActionPerformed);
+
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(this::btnUpdateActionPerformed);
+
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(this::btnDeleteActionPerformed);
+
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(this::btnSearchActionPerformed);
+
+        btnClear.setText("Clear");
+        btnClear.addActionListener(this::btnClearActionPerformed);
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(this::btnBackActionPerformed);
+
+        jLabel8.setText("Appointment Type");
+
+        cmbAppointmentType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "General Checkup", "Follow-up", "Blood Test", "Dental", "Eye Examination", "Specialist Consultation", "Emergency" }));
+        cmbAppointmentType.addActionListener(this::cmbAppointmentTypeActionPerformed);
+
+        txtCancel.setText("Cancel");
+        txtCancel.addActionListener(this::txtCancelActionPerformed);
+
+        jLabel3.setText("DoctorID");
+
+        txtStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Scheduled" }));
+        txtStatus.addActionListener(this::txtStatusActionPerformed);
+
+        jLabel7.setText("Nurse ID");
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Manage Appointments");
+
+        jLabel10.setText("Notes");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(214, 214, 214)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(208, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel4))
+                                .addGap(43, 43, 43)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtNurseID, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                        .addComponent(txtDoctorID, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtPatientID)
+                                        .addComponent(txtAppointmentID)))
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbAppointmentType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtTime, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtStatus, 0, 195, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAdd)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnUpdate)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDelete)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCancel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSearch)
+                                .addGap(12, 12, 12)
+                                .addComponent(btnClear)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBack)))
+                        .addGap(258, 258, 258))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(txtAppointmentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(txtPatientID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDoctorID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNurseID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbAppointmentType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(11, 11, 11)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addGap(70, 70, 70)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdd)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDelete)
+                    .addComponent(btnSearch)
+                    .addComponent(btnClear)
+                    .addComponent(btnBack)
+                    .addComponent(txtCancel))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        loadAppointments();
+        clearFields();
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (!validateInput()) {
+            return;
+        }
+
+        try {
+            Scanner scanner = new Scanner(
+                    new File("src/clinicmanagementsystem/data/appointments.txt")
+            );
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.trim().isEmpty()) continue;
+
+                if (line.startsWith(txtAppointmentID.getText().trim() + ",")) {
+                    JOptionPane.showMessageDialog(this,
+                            "Appointment ID already exists!");
+                    scanner.close();
+                    return;
+                }
+            }
+
+            scanner.close();
+
+            BufferedWriter bw = new BufferedWriter(
+                    new FileWriter("src/clinicmanagementsystem/data/appointments.txt", true)
+            );
+
+            String doctorID = txtDoctorID.getText().trim().isEmpty() ? "N/A" : txtDoctorID.getText().trim();
+            String nurseID = txtNurseID.getText().trim().isEmpty() ? "N/A" : txtNurseID.getText().trim();
+
+            String data = txtAppointmentID.getText().trim() + ","
+                    + txtPatientID.getText().trim() + ","
+                    + doctorID + ","
+                    + nurseID + ","
+                    + txtDate.getText().trim() + ","
+                    + txtTime.getText().trim() + ","
+                    + cmbAppointmentType.getSelectedItem().toString() + ","
+                    + txtStatus.getSelectedItem().toString() + ","
+                    + jTextField1.getText().trim();
+            
+            bw.write(data);
+            bw.newLine();
+            bw.close();
+
+            JOptionPane.showMessageDialog(this, "Appointment added successfully!");
+
+            loadAppointments();
+            clearFields();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        String appointmentID = txtAppointmentID.getText().trim();
+
+        if (appointmentID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter or select an Appointment ID.");
+            return;
+        }
+
+        if (!validateInput()) {
+            return;
+        }
+
+        try {
+            File inputFile = new File("src/clinicmanagementsystem/data/appointments.txt");
+            File tempFile = new File("src/clinicmanagementsystem/data/temp.txt");
+
+            Scanner scanner = new Scanner(inputFile);
+            PrintWriter writer = new PrintWriter(tempFile);
+
+            boolean found = false;
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.trim().isEmpty()) continue;
+
+                if (line.startsWith(appointmentID + ",")) {
+                    String doctorID = txtDoctorID.getText().trim().isEmpty() ? "N/A" : txtDoctorID.getText().trim();
+                    String nurseID = txtNurseID.getText().trim().isEmpty() ? "N/A" : txtNurseID.getText().trim();
+
+                    String updatedData = txtAppointmentID.getText().trim() + ","
+                            + txtPatientID.getText().trim() + ","
+                            + doctorID + ","
+                            + nurseID + ","
+                            + txtDate.getText().trim() + ","
+                            + txtTime.getText().trim() + ","
+                            + cmbAppointmentType.getSelectedItem().toString() + ","
+                            + txtStatus.getSelectedItem().toString() + ","
+                            + jTextField1.getText().trim();
+
+                    writer.println(updatedData);
+                    found = true;
+                } else {
+                    writer.println(line);
+                }
+            }
+
+            scanner.close();
+            writer.close();
+
+            inputFile.delete();
+            tempFile.renameTo(inputFile);
+
+            if (found) {
+                JOptionPane.showMessageDialog(this, "Appointment updated successfully!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Appointment ID not found.");
+            }
+
+            loadAppointments();
+            clearFields();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        String appointmentID = txtAppointmentID.getText().trim();
+
+        if (appointmentID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter or select an Appointment ID.");
+            return;
+        }
+
+        try {
+            File inputFile = new File("src/clinicmanagementsystem/data/appointments.txt");
+            File tempFile = new File("src/clinicmanagementsystem/data/temp.txt");
+
+            Scanner scanner = new Scanner(inputFile);
+            PrintWriter writer = new PrintWriter(tempFile);
+
+            boolean found = false;
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.trim().isEmpty()) continue;
+
+                if (!line.startsWith(appointmentID + ",")) {
+                    writer.println(line);
+                } else {
+                    found = true;
+                }
+            }
+
+            scanner.close();
+            writer.close();
+
+            inputFile.delete();
+            tempFile.renameTo(inputFile);
+
+            if (found) {
+                JOptionPane.showMessageDialog(this, "Appointment deleted successfully!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Appointment ID not found.");
+            }
+
+            loadAppointments();
+            clearFields();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int row = jTable1.getSelectedRow();
+
+        if (row == -1 || jTable1.getValueAt(row, 0) == null) {
+            return;
+        }
+
+        txtAppointmentID.setText(jTable1.getValueAt(row, 0) != null ? jTable1.getValueAt(row, 0).toString() : "");
+        txtPatientID.setText(jTable1.getValueAt(row, 1) != null ? jTable1.getValueAt(row, 1).toString() : "");
+        txtDoctorID.setText(jTable1.getValueAt(row, 2) != null ? jTable1.getValueAt(row, 2).toString() : "");
+        txtNurseID.setText(jTable1.getValueAt(row, 3) != null ? jTable1.getValueAt(row, 3).toString() : "");
+        txtDate.setText(jTable1.getValueAt(row, 4) != null ? jTable1.getValueAt(row, 4).toString() : "");
+        txtTime.setText(jTable1.getValueAt(row, 5) != null ? jTable1.getValueAt(row, 5).toString() : "");
+        
+        Object typeObj = jTable1.getValueAt(row, 6);
+        if (typeObj != null && !typeObj.toString().isEmpty()) cmbAppointmentType.setSelectedItem(typeObj.toString());
+        
+        Object notesObj = jTable1.getValueAt(row, 7);
+        jTextField1.setText(notesObj != null ? notesObj.toString() : "");
+        
+        Object statusObj = jTable1.getValueAt(row, 8);
+        if (statusObj != null && !statusObj.toString().isEmpty()) {
+            String status = statusObj.toString();
+            javax.swing.DefaultComboBoxModel<String> model = (javax.swing.DefaultComboBoxModel<String>) txtStatus.getModel();
+            if (model.getIndexOf(status) == -1) {
+                model.addElement(status);
+            }
+            txtStatus.setSelectedItem(status);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        String searchID = txtAppointmentID.getText().trim();
+
+        if (searchID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter an Appointment ID to search.");
+            loadAppointments();
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        try {
+            BufferedReader br = new BufferedReader(
+                    new FileReader("src/clinicmanagementsystem/data/appointments.txt")
+            );
+
+            String line;
+            boolean found = false;
+
+            while ((line = br.readLine()) != null) {
+                if (line.toLowerCase().startsWith("apptid")) {
+                    continue;
+                }
+
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+
+                String[] data = line.split(",", -1);
+
+                if (data[0].trim().equalsIgnoreCase(searchID)) {
+                    String[] padded = new String[9];
+                    for (int i = 0; i < 9; i++) {
+                        padded[i] = (i < data.length) ? data[i] : "";
+                    }
+                    model.addRow(new Object[]{padded[0], padded[1], padded[2], padded[3], padded[4], padded[5], padded[6], padded[8], padded[7]});
+
+                    txtAppointmentID.setText(padded[0]);
+                    txtPatientID.setText(padded[1]);
+                    txtDoctorID.setText(padded[2]);
+                    txtNurseID.setText(padded[3]);
+                    txtDate.setText(padded[4]);
+                    txtTime.setText(padded[5]);
+                    if (!padded[6].isEmpty()) cmbAppointmentType.setSelectedItem(padded[6]);
+                    jTextField1.setText(padded[8]);
+                    
+                    String status = padded[7];
+                    if (!status.isEmpty()) {
+                        javax.swing.DefaultComboBoxModel<String> comboModel = (javax.swing.DefaultComboBoxModel<String>) txtStatus.getModel();
+                        if (comboModel.getIndexOf(status) == -1) {
+                            comboModel.addElement(status);
+                        }
+                        txtStatus.setSelectedItem(status);
+                    }
+
+                    found = true;
+                    break;
+                }
+            }
+
+            br.close();
+
+            if (!found) {
+                JOptionPane.showMessageDialog(this, "Appointment not found.");
+                loadAppointments();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        ReceptionistDashboardGUI dashboard = new ReceptionistDashboardGUI();
+        dashboard.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void cmbAppointmentTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAppointmentTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbAppointmentTypeActionPerformed
+
+    private void txtCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCancelActionPerformed
+        String appointmentID = txtAppointmentID.getText().trim();
+        if (appointmentID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please select an Appointment to cancel.");
+            return;
+        }
+
+        javax.swing.DefaultComboBoxModel<String> comboModel = (javax.swing.DefaultComboBoxModel<String>) txtStatus.getModel();
+        
+        boolean foundInCombo = false;
+        for (int i = 0; i < comboModel.getSize(); i++) {
+            if (comboModel.getElementAt(i).equalsIgnoreCase("Cancelled")) {
+                txtStatus.setSelectedIndex(i);
+                foundInCombo = true;
+                break;
+            }
+        }
+        
+        if (!foundInCombo) {
+            comboModel.addElement("Cancelled");
+            txtStatus.setSelectedItem("Cancelled");
+        }
+
+        try {
+            File inputFile = new File("src/clinicmanagementsystem/data/appointments.txt");
+            File tempFile = new File("src/clinicmanagementsystem/data/temp.txt");
+
+            Scanner scanner = new Scanner(inputFile);
+            PrintWriter writer = new PrintWriter(tempFile);
+
+            boolean found = false;
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.trim().isEmpty()) continue;
+
+                if (line.startsWith(appointmentID + ",")) {
+                    String doctorID = txtDoctorID.getText().trim().isEmpty() ? "N/A" : txtDoctorID.getText().trim();
+                    String nurseID = txtNurseID.getText().trim().isEmpty() ? "N/A" : txtNurseID.getText().trim();
+
+                    String updatedData = txtAppointmentID.getText().trim() + ","
+                            + txtPatientID.getText().trim() + ","
+                            + doctorID + ","
+                            + nurseID + ","
+                            + txtDate.getText().trim() + ","
+                            + txtTime.getText().trim() + ","
+                            + cmbAppointmentType.getSelectedItem().toString() + ","
+                            + txtStatus.getSelectedItem().toString() + ","
+                            + jTextField1.getText().trim();
+
+                    writer.println(updatedData);
+                    found = true;
+                } else {
+                    writer.println(line);
+                }
+            }
+
+            scanner.close();
+            writer.close();
+
+            inputFile.delete();
+            tempFile.renameTo(inputFile);
+
+            if (found) {
+                JOptionPane.showMessageDialog(this, "Appointment cancelled");
+            } else {
+                JOptionPane.showMessageDialog(this, "Appointment ID not found.");
+            }
+
+            loadAppointments();
+            clearFields();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_txtCancelActionPerformed
+
+    private void txtStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStatusActionPerformed
+
+    private void txtDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +732,33 @@ public class ManageAppointmentsGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cmbAppointmentType;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtAppointmentID;
+    private javax.swing.JButton txtCancel;
+    private javax.swing.JTextField txtDate;
+    private javax.swing.JTextField txtDoctorID;
+    private javax.swing.JTextField txtNurseID;
+    private javax.swing.JTextField txtPatientID;
+    private javax.swing.JComboBox<String> txtStatus;
+    private javax.swing.JTextField txtTime;
     // End of variables declaration//GEN-END:variables
 }

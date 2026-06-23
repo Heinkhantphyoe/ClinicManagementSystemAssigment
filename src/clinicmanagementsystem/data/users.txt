@@ -1,5 +1,7 @@
 userId,name,gender,phone,email,username,password,role
 U001,Admin User,Male,123333,admin@clinic.com,admin,admin,Admin
 U002,Doctor User,Female,0123456790,doctor@clinic.com,doctor,doctor123,Doctor
-U003,Nurse User,Female,0123456791,nurse@clinic.com,nurse,nurse123,Nurse
-U004,Receptionist User,Male,0123456792,reception@clinic.com,reception,reception123,Receptionist
+U003,Felix,Male,0123456790,felix@clinic.com,felix,felix123,Doctor
+U004,Nurse User,Female,0123456791,nurse@clinic.com,nurse,nurse123,Nurse
+U005,Angelina,Female,0123456791,angel@clinic.com,angel,angel123,Nurse
+U006,Receptionist User,Male,0123456792,reception@clinic.com,reception,reception123,Receptionist

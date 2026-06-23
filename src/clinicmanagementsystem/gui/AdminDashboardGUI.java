@@ -22,6 +22,25 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
      */
     public AdminDashboardGUI() {
         initComponents();
+        setupExitAndLogout();
+    }
+
+    private void setupExitAndLogout() {
+        jButton4.addActionListener(e -> {
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout Confirmation", javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE);
+            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                clinicmanagementsystem.util.SessionManager.logout();
+                LoginGUI loginGUI = new LoginGUI();
+                loginGUI.setVisible(true);
+                this.dispose();
+            }
+        });
+        jButton6.addActionListener(e -> {
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Are you sure you want to exit the application?", "Exit Confirmation", javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE);
+            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        });
     }
 
     /**

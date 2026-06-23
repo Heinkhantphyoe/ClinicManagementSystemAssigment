@@ -1,3 +1,4 @@
-patientId,name,gender,phone,email,age,bloodGroup,address,emergencyContact
-P001,Patient User,Male,0123456793,patient@clinic.com,30,O+,123 Main St,999-9999
-P002,Jane Doe,Female,1234,jane@example.com,25,A-,456 Oak Ave,888-8888
+patientId,name,password,gender,phone,email,age,bloodGroup,address,emergencyContact
+P001,Patient User,1234,Male,0123456793,patient@clinic.com,77,O,123 Main St,999-9999
+P002,Jane Doe,7777,Female,1234,jane@example.com,25,AB+,456 Oak Ave,77777
+P003,Delignt,1234,Male,0123456793,deligent@gmailcom,88,AB+,123 Main St,789456123

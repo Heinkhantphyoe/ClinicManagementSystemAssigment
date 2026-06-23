@@ -4,12 +4,13 @@
  */
 package clinicmanagementsystem.gui.receptionist;
 
-/**
- *
- * @author Acer
- */
+import clinicmanagementsystem.gui.ReceptionistDashboardGUI;
+import java.io.*;
+import java.util.Scanner;
+import javax.swing.JOptionPane;
+
 public class AssignDoctorAndNurseGUI extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AssignDoctorAndNurseGUI.class.getName());
 
     /**
@@ -17,6 +18,43 @@ public class AssignDoctorAndNurseGUI extends javax.swing.JFrame {
      */
     public AssignDoctorAndNurseGUI() {
         initComponents();
+        txtPatientID.setEditable(false);
+        txtDate.setEditable(false);
+        txtTime.setEditable(false);
+        loadDoctorsAndNurses();
+    }
+
+    private void loadDoctorsAndNurses() {
+        cmbDoctor.removeAllItems();
+        cmbNurse.removeAllItems();
+
+        try {
+            BufferedReader br = new BufferedReader(
+                    new FileReader("src/clinicmanagementsystem/data/users.txt")
+            );
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.toLowerCase().startsWith("userid") || line.trim().isEmpty()) {
+                    continue;
+                }
+
+                String[] data = line.split(",", -1);
+                if (data.length >= 8) {
+                    String id = data[0].trim();
+                    String role = data[7].trim();
+
+                    if (role.equalsIgnoreCase("Doctor")) {
+                        cmbDoctor.addItem(id);
+                    } else if (role.equalsIgnoreCase("Nurse")) {
+                        cmbNurse.addItem(id);
+                    }
+                }
+            }
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -28,21 +66,295 @@ public class AssignDoctorAndNurseGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtAppointmentID = new javax.swing.JTextField();
+        txtPatientID = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtDate = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtTime = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        btnSearchAppointment = new javax.swing.JButton();
+        btnAssignStaff = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        cmbDoctor = new javax.swing.JComboBox<>();
+        cmbNurse = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText(" Assign Doctor and Nurse ");
+
+        jLabel2.setText(" Appointment ID");
+
+        jLabel3.setText(" Patient ID");
+
+        jLabel4.setText("Date");
+
+        jLabel5.setText("Time");
+
+        jLabel6.setText("Doctor");
+
+        jLabel7.setText("Nurse");
+
+        btnSearchAppointment.setText("Search Appointment");
+        btnSearchAppointment.addActionListener(this::btnSearchAppointmentActionPerformed);
+
+        btnAssignStaff.setText("Assign Staff");
+        btnAssignStaff.addActionListener(this::btnAssignStaffActionPerformed);
+
+        btnClear.setText("Clear");
+        btnClear.addActionListener(this::btnClearActionPerformed);
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(this::btnBackActionPerformed);
+
+        cmbDoctor.addActionListener(this::cmbDoctorActionPerformed);
+
+        cmbNurse.addActionListener(this::cmbNurseActionPerformed);
+
+        jLabel8.setText("!!! Search with appointmentID and assign to doctor and nurse !!!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(166, 166, 166)
+                                .addComponent(btnAssignStaff))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7))
+                                .addGap(49, 49, 49)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtTime)
+                                            .addComponent(cmbDoctor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(txtAppointmentID)
+                                            .addComponent(txtPatientID)
+                                            .addComponent(txtDate)
+                                            .addComponent(cmbNurse, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(44, 44, 44)
+                                        .addComponent(btnSearchAppointment))))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(215, 215, 215)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(239, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtAppointmentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSearchAppointment)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(txtPatientID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(txtTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(cmbDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(cmbNurse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnAssignStaff)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack)
+                    .addComponent(btnClear))
+                .addGap(15, 15, 15))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSearchAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchAppointmentActionPerformed
+        String appointmentID = txtAppointmentID.getText().trim();
+        if (appointmentID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter an Appointment ID to search.");
+            return;
+        }
+
+        boolean found = false;
+
+        try {
+            BufferedReader br = new BufferedReader(
+                    new FileReader("src/clinicmanagementsystem/data/appointments.txt")
+            );
+
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                if (line.toLowerCase().startsWith("apptid")) {
+                    continue;
+                }
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+
+                String[] data = line.split(",", -1);
+
+                if (data[0].equalsIgnoreCase(appointmentID)) {
+                    txtPatientID.setText(data.length > 1 ? data[1] : "");
+                    txtDate.setText(data.length > 4 ? data[4] : "");
+                    txtTime.setText(data.length > 5 ? data[5] : "");
+                    
+                    if (data.length > 2 && !data[2].isEmpty() && !data[2].equals("N/A")) {
+                        cmbDoctor.setSelectedItem(data[2]);
+                    }
+                    if (data.length > 3 && !data[3].isEmpty() && !data[3].equals("N/A")) {
+                        cmbNurse.setSelectedItem(data[3]);
+                    }
+
+                    found = true;
+                    break;
+                }
+            }
+
+            br.close();
+
+            if (!found) {
+                JOptionPane.showMessageDialog(this, "Appointment not found.");
+                btnClearActionPerformed(null);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnSearchAppointmentActionPerformed
+
+    private void cmbDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDoctorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbDoctorActionPerformed
+
+    private void btnAssignStaffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignStaffActionPerformed
+        String appointmentID = txtAppointmentID.getText().trim();
+        
+        if (appointmentID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please search for an Appointment ID first.");
+            return;
+        }
+        
+        String doctorID = cmbDoctor.getSelectedItem() != null ? cmbDoctor.getSelectedItem().toString().trim() : "";
+        String nurseID = cmbNurse.getSelectedItem() != null ? cmbNurse.getSelectedItem().toString().trim() : "";
+        
+        if (doctorID.isEmpty() && nurseID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please select at least a Doctor or Nurse to assign.");
+            return;
+        }
+
+        boolean found = false;
+
+        try {
+            File inputFile = new File("src/clinicmanagementsystem/data/appointments.txt");
+            File tempFile = new File("src/clinicmanagementsystem/data/temp.txt");
+
+            Scanner scanner = new Scanner(inputFile);
+            PrintWriter writer = new PrintWriter(tempFile);
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+
+                String[] data = line.split(",", -1);
+
+                if (data[0].equalsIgnoreCase(appointmentID)) {
+                    String[] newRow = new String[9];
+                    for(int i = 0; i < 9; i++) {
+                        newRow[i] = data.length > i ? data[i] : "";
+                    }
+                    
+                    newRow[2] = doctorID.isEmpty() ? "N/A" : doctorID;
+                    newRow[3] = nurseID.isEmpty() ? "N/A" : nurseID;
+
+                    String updatedData = String.join(",", newRow);
+                    writer.println(updatedData);
+                    found = true;
+                } else {
+                    writer.println(line);
+                }
+            }
+
+            scanner.close();
+            writer.close();
+
+            if (found) {
+                inputFile.delete();
+                tempFile.renameTo(inputFile);
+                JOptionPane.showMessageDialog(this, "Doctor and Nurse assigned successfully!");
+                btnClearActionPerformed(null);
+            } else {
+                tempFile.delete();
+                JOptionPane.showMessageDialog(this, "Appointment not found.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAssignStaffActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        txtAppointmentID.setText("");
+        txtPatientID.setText("");
+        txtDate.setText("");
+        txtTime.setText("");
+        cmbDoctor.setSelectedIndex(0);
+        cmbNurse.setSelectedIndex(0);
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void cmbNurseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbNurseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbNurseActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        ReceptionistDashboardGUI dashboard = new ReceptionistDashboardGUI();
+        dashboard.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +382,23 @@ public class AssignDoctorAndNurseGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAssignStaff;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnSearchAppointment;
+    private javax.swing.JComboBox<String> cmbDoctor;
+    private javax.swing.JComboBox<String> cmbNurse;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JTextField txtAppointmentID;
+    private javax.swing.JTextField txtDate;
+    private javax.swing.JTextField txtPatientID;
+    private javax.swing.JTextField txtTime;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,18 +1,17 @@
-paymentId,patientId,amount,date,method,status
-PAY001,P001,50.0,2026-05-20,Cash,Paid
-PAY002,P002,75.0,2026-05-22,Credit Card,Paid
-PAY003,P001,120.0,2026-01-15,Credit Card,Paid
-PAY004,P002,85.50,2026-02-10,Cash,Paid
-PAY005,P001,200.0,2026-03-25,Insurance,Paid
-PAY006,P002,45.0,2026-04-05,Cash,Paid
-PAY007,P001,150.0,2026-05-12,Credit Card,Paid
-PAY008,P002,95.0,2026-06-30,Cash,Paid
-PAY009,P001,310.0,2026-07-22,Insurance,Paid
-PAY010,P002,60.0,2026-08-18,Cash,Paid
-PAY011,P001,125.0,2026-09-05,Credit Card,Paid
-PAY012,P002,180.0,2026-10-10,Cash,Paid
-PAY013,P001,75.0,2026-11-28,Cash,Paid
-PAY014,P002,220.0,2026-12-15,Insurance,Paid
-PAY015,P001,90.0,2025-05-20,Cash,Paid
-PAY016,P002,110.0,2025-11-12,Credit Card,Paid
-PAY017,P001,130.0,2026-05-20,Cash,Unpaid
+paymentId,appointmentId,patientId,patientName,date,amount,method,status
+PAY001,A001,P001,Patient User,2026-05-20,100.0,Card,Paid
+PAY002,A002,P002,Jane Doe,2026-05-22,75.0,Credit Card,Paid
+PAY003,A003,P001,Patient User,2026-01-15,120.0,Credit Card,Paid
+PAY004,A004,P002,Jane Doe,2026-02-10,85.50,Cash,Paid
+PAY005,A005,P001,Patient User,2026-03-25,200.0,Insurance,Paid
+PAY006,A008,P002,Jane Doe,2026-04-05,45.0,Cash,Paid
+PAY007,A001,P001,Patient User,2026-05-12,150.0,Credit Card,Paid
+PAY008,A002,P002,Jane Doe,2026-06-30,95.0,Cash,Paid
+PAY009,A003,P001,Patient User,2026-07-22,310.0,Insurance,Paid
+PAY010,A004,P002,Jane Doe,2026-08-18,60.0,Cash,Paid
+PAY011,A005,P001,Patient User,2026-09-05,125.0,Credit Card,Paid
+PAY012,A008,P002,Jane Doe,2026-10-10,180.0,Cash,Paid
+PAY013,A001,P001,Patient User,2026-11-28,75.0,Cash,Paid
+PAY014,A002,P002,Jane Doe,2026-12-15,220.0,Insurance,Paid
+PAY015,A003,P001,Patient User,2025-05-20,90.0,Cash,Paid
+PAY016,A004,P002,Jane Doe,2025-11-12,110.0,Credit Card,Paid

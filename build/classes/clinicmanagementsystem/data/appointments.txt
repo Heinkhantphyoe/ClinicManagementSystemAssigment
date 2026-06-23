@@ -4,6 +4,4 @@ A002,P002,U002,U003,2026-06-11,11:30,Follow-up,Scheduled,Follow-up visit
 A003,P001,U002,N/A,2026-06-12,09:00,General Checkup,Completed,First consultation
 A004,P002,U002,N/A,2026-06-13,14:00,General Checkup,Cancelled,Rescheduled by patient
 A005,P001,U002,N/A,2026-06-19,10:00,General Checkup,Scheduled,Today checkup
-A006,P002,N/A,N/A,2026-06-22,,Blood Test,Pending,blood test test
-A007,P002,N/A,N/A,2026-06-22,,Dental,Pending,dental check
-A008,P002,N/A,N/A,2026-06-30,,General Checkup,Pending,special
+A008,P002,U003,U005,2026-06-24,12:00,Specialist Consultation,Pending,medical checkup

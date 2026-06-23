@@ -4,12 +4,18 @@
  */
 package clinicmanagementsystem.gui;
 
+import clinicmanagementsystem.gui.receptionist.AssignDoctorAndNurseGUI;
+import clinicmanagementsystem.gui.receptionist.CollectPayment;
+import clinicmanagementsystem.gui.receptionist.GenerateReceiptGUI;
+import clinicmanagementsystem.gui.receptionist.ManageAppointmentsGUI;
+import clinicmanagementsystem.gui.receptionist.ManagePatientsGUI;
+
 /**
  *
  * @author Acer
  */
 public class ReceptionistDashboardGUI extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ReceptionistDashboardGUI.class.getName());
 
     /**
@@ -28,7 +34,7 @@ public class ReceptionistDashboardGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        exitBtn = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         manageAppointmentBtn = new javax.swing.JButton();
         managePatientBtn = new javax.swing.JButton();
         assignDoctorAndNurseBtn = new javax.swing.JButton();
@@ -38,8 +44,8 @@ public class ReceptionistDashboardGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        exitBtn.setText("Exit");
-        exitBtn.addActionListener(this::exitBtnActionPerformed);
+        jButton1.setText("Exit");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         manageAppointmentBtn.setText(" Manage Appointments");
         manageAppointmentBtn.addActionListener(this::manageAppointmentBtnActionPerformed);
@@ -74,7 +80,7 @@ public class ReceptionistDashboardGUI extends javax.swing.JFrame {
                             .addComponent(manageAppointmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(assignDoctorAndNurseBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(exitBtn)
+                            .addComponent(jButton1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(98, Short.MAX_VALUE))
@@ -94,7 +100,7 @@ public class ReceptionistDashboardGUI extends javax.swing.JFrame {
                 .addComponent(generateReceiptBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(exitBtn)
+                    .addComponent(jButton1)
                     .addComponent(btnLogout))
                 .addGap(36, 36, 36))
         );
@@ -102,24 +108,32 @@ public class ReceptionistDashboardGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-    }//GEN-LAST:event_exitBtnActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void manageAppointmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageAppointmentBtnActionPerformed
-
+        ManageAppointmentsGUI ma = new ManageAppointmentsGUI();
+        ma.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_manageAppointmentBtnActionPerformed
 
     private void managePatientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managePatientBtnActionPerformed
-
+        ManagePatientsGUI mp = new ManagePatientsGUI();
+        mp.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_managePatientBtnActionPerformed
 
     private void assignDoctorAndNurseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignDoctorAndNurseBtnActionPerformed
-
+        AssignDoctorAndNurseGUI mp = new AssignDoctorAndNurseGUI();
+        mp.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_assignDoctorAndNurseBtnActionPerformed
 
     private void collectPaymetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_collectPaymetBtnActionPerformed
-
+        CollectPayment cp = new CollectPayment();
+        cp.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_collectPaymetBtnActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
@@ -127,8 +141,13 @@ public class ReceptionistDashboardGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void generateReceiptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateReceiptBtnActionPerformed
-        // TODO add your handling code here:
+        GenerateReceiptGUI gr = new GenerateReceiptGUI();
+        gr.setVisible(true);
+        this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_generateReceiptBtnActionPerformed
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {
+        System.exit(0);
+    }
 
     /**
      * @param args the command line arguments
@@ -159,8 +178,8 @@ public class ReceptionistDashboardGUI extends javax.swing.JFrame {
     private javax.swing.JButton assignDoctorAndNurseBtn;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton collectPaymetBtn;
-    private javax.swing.JButton exitBtn;
     private javax.swing.JButton generateReceiptBtn;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton manageAppointmentBtn;
     private javax.swing.JButton managePatientBtn;
     // End of variables declaration//GEN-END:variables

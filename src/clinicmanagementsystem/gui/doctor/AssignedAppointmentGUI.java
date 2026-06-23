@@ -3,9 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package clinicmanagementsystem.gui.doctor;
-
+import javax.swing.table.DefaultTableModel;
 import clinicmanagementsystem.gui.DoctorDashboardGUI;
-
+import clinicmanagementsystem.util.FileManager;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 /**
  *
  * @author Acer
@@ -13,12 +16,50 @@ import clinicmanagementsystem.gui.DoctorDashboardGUI;
 public class AssignedAppointmentGUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AssignedAppointmentGUI.class.getName());
-
+    
+    
+    private String[] columnName = {"APPOINTMENT ID" , "PATIENT ID" , "DOCTOR ID" ,"APPOINTMENT DATE" , "APPOINTMENT TIME" , "STATUS" , "NOTES"};
+ private DefaultTableModel model = new DefaultTableModel();
     /**
      * Creates new form AssignedAppointmentGUI
      */
     public AssignedAppointmentGUI() {
+        model.setColumnIdentifiers(columnName);
         initComponents();
+        addDataAppointmentIntoTable();
+        setMinimumSize(getSize());
+    }
+
+    private String[] loadAppointments(){
+        try {
+            return FileManager.readLines("src/clinicmanagementsystem/data/appointments.txt");
+        }
+        catch(Exception e){
+            logger.log(java.util.logging.Level.SEVERE, "Failed to load appointments", e);
+        }
+        return new String[0];
+    }
+
+    private void addDataAppointmentIntoTable(){
+        model.setRowCount(0);
+        String[] lines = loadAppointments();
+        String currentDoctorId = clinicmanagementsystem.util.SessionManager.getCurrentUserId();
+        if (currentDoctorId == null) currentDoctorId = "";
+
+        for(String line : lines) {
+            if (line == null || line.isBlank()) {
+                continue;
+            }
+            String[] fields = line.split(",");
+            if (fields.length < 8) {
+                continue;
+            }
+            if (!fields[2].equalsIgnoreCase(currentDoctorId)) {
+                continue;
+            }
+            String notes = fields.length > 8 ? fields[8] : "";
+            model.addRow(new String[]{ fields[0], fields[1], fields[2], fields[4], fields[5], fields[7], notes });
+        }
     }
 
     /**
@@ -30,27 +71,74 @@ public class AssignedAppointmentGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         backButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        searchBtn = new javax.swing.JButton();
+        searchTField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         backButton.setText("Back");
         backButton.addActionListener(this::backButtonActionPerformed);
 
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel1.setText("Assigned Appointments");
+
+        jTable1.setModel(model
+        );
+        jScrollPane1.setViewportView(jTable1);
+
+        jButton1.setText("Refresh");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        searchBtn.setText("Search");
+        searchBtn.addActionListener(this::searchBtnActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(backButton)
-                .addContainerGap(307, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(searchTField, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(searchBtn)
+                        .addGap(228, 228, 228))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+                        .addGap(24, 24, 24))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(backButton)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(258, Short.MAX_VALUE)
-                .addComponent(backButton)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchBtn)
+                    .addComponent(searchTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(backButton)
+                    .addComponent(jButton1))
                 .addGap(19, 19, 19))
         );
 
@@ -62,6 +150,49 @@ public class AssignedAppointmentGUI extends javax.swing.JFrame {
         doctorDashboardGUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        loadAppointments();
+        addDataAppointmentIntoTable();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {
+        String targetDate = searchTField.getText().trim();
+        if (!targetDate.isEmpty() && !clinicmanagementsystem.util.ValidationUtil.isValidDate(targetDate)) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Wrong date format! Please enter as YYYY-MM-DD", 
+                "Invalid Date", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        searchByDate(targetDate);
+    }
+    
+    private void searchByDate(String targetDate) {
+        model.setRowCount(0);
+        String[] lines = loadAppointments();
+        String currentDoctorId = clinicmanagementsystem.util.SessionManager.getCurrentUserId();
+        if (currentDoctorId == null) currentDoctorId = "";
+
+        for(String line : lines) {
+            if (line == null || line.isBlank()) {
+                continue;
+            }
+            String[] fields = line.split(",");
+            if (fields.length < 8) {
+                continue;
+            }
+            if (!fields[2].equalsIgnoreCase(currentDoctorId)) {
+                continue;
+            }
+            String date = fields[4];
+            if (!targetDate.trim().isEmpty() && !date.contains(targetDate.trim())) {
+                continue; // skip if date doesn't match
+            }
+            String notes = fields.length > 8 ? fields[8] : "";
+            model.addRow(new String[]{ fields[0], fields[1], fields[2], fields[4], fields[5], fields[7], notes });
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -90,5 +221,14 @@ public class AssignedAppointmentGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JTextField searchTField;
     // End of variables declaration//GEN-END:variables
 }

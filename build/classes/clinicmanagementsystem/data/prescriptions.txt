@@ -1,3 +1,4 @@
 prescriptionId,patientId,doctorId,medication,dosage,frequency,duration,instructions,date
 PR001,P001,U002,Paracetamol,500mg,3 times a day,5 days,Take after meals,2026-06-15
 PR002,P002,U002,Amoxicillin,250mg,3 times a day,5 days,Take three times a day for 5 days,2026-06-16
+PR004,P002,U002,para,100ml,2 times a day,5 days,take after meal,2026-06-23

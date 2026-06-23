@@ -3,6 +3,7 @@ package clinicmanagementsystem.model;
 public class Patient {
     private String patientId;
     private String name;
+    private String password;
     private String gender;
     private String phoneNumber;
     private String email;
@@ -14,10 +15,11 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(String patientId, String name, String gender, String phoneNumber, String email,
+    public Patient(String patientId, String name, String password, String gender, String phoneNumber, String email,
             int age, String bloodType, String address, String emergencyContact) {
         this.patientId = patientId;
         this.name = name;
+        this.password = password;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
         this.email = email;
@@ -25,6 +27,14 @@ public class Patient {
         this.bloodType = bloodType;
         this.address = address;
         this.emergencyContact = emergencyContact;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPatientId() {
@@ -101,7 +111,7 @@ public class Patient {
 
     @Override
     public String toString() {
-        return patientId + "," + name + "," + gender + "," + phoneNumber + "," + email + ","
+        return patientId + "," + name + "," + password + "," + gender + "," + phoneNumber + "," + email + ","
                 + age + "," + bloodType + "," + address + "," + emergencyContact;
     }
 }

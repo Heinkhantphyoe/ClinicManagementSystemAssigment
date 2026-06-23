@@ -5,20 +5,26 @@
 package clinicmanagementsystem.gui.doctor;
 
 import clinicmanagementsystem.gui.DoctorDashboardGUI;
+import clinicmanagementsystem.util.FileManager;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Acer
  */
 public class PrescribeMedicationGUI extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PrescribeMedicationGUI.class.getName());
+    private static final String FILE_PATH = "src/clinicmanagementsystem/data/prescriptions.txt";
+    private static final String DOCTOR_ID = "U002";
 
     /**
      * Creates new form PrescribeMedicationGUI
      */
     public PrescribeMedicationGUI() {
         initComponents();
+        setMinimumSize(getSize());
     }
 
     /**
@@ -30,28 +36,140 @@ public class PrescribeMedicationGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jTextField7 = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel2.setText("Patient ID");
+
+        jButton1.setText("Search");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jLabel4.setText("Medication");
+
+        jLabel5.setText("Dosage");
+
+        jTextField4.addActionListener(this::jTextField4ActionPerformed);
+
+        jLabel9.setText("Instructions");
+
+        jButton4.setText("Submit");
+        jButton4.addActionListener(this::jButton4ActionPerformed);
+
+        jButton5.setText("Clear");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel1.setText("Prescribe Medication ");
+
         backButton.setText("Back");
         backButton.addActionListener(this::backButtonActionPerformed);
+
+        jLabel3.setText("Frequency");
+
+        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+
+        jLabel6.setText("Duration");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(backButton)
-                .addContainerGap(312, Short.MAX_VALUE))
+                .addGap(177, 177, 177)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(16, 16, 16)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField4)
+                                    .addComponent(jTextField3)
+                                    .addComponent(jTextField2))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(1, 1, 1)
+                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(backButton)
+                        .addGap(299, 299, 299)))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(74, 74, 74))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(260, Short.MAX_VALUE)
-                .addComponent(backButton)
-                .addGap(17, 17, 17))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 368, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton5)
+                            .addComponent(jButton4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(backButton)
+                        .addGap(9, 9, 9))))
         );
 
         pack();
@@ -62,6 +180,105 @@ public class PrescribeMedicationGUI extends javax.swing.JFrame {
         doctorDashboardGUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private String generatePrescriptionId() {
+        try {
+            String[] lines = FileManager.readLines(FILE_PATH);
+            int nextNumber = lines.length + 1;
+            return "PR" + String.format("%03d", nextNumber);
+        } catch (Exception e) {
+            logger.log(java.util.logging.Level.SEVERE, "Failed to generate prescription id", e);
+        }
+        return "PR001";
+    }
+
+    private void clearField() {
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField7.setText("");
+    }
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        String patientId = jTextField1.getText();
+
+        if (patientId.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a Patient ID to search!");
+            return;
+        }
+
+        try {
+            String[] lines = FileManager.readLines("src/clinicmanagementsystem/data/patients.txt");
+            boolean found = false;
+
+            for (String line : lines) {
+                if (line == null || line.isEmpty()) {
+                    continue;
+                }
+                String[] fields = line.split(",");
+                if (fields.length < 2) {
+                    continue;
+                }
+                if (fields[0].equals(patientId)) {
+                    JOptionPane.showMessageDialog(this, "Patient found: " + fields[1]);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                JOptionPane.showMessageDialog(this, "No patient found with ID: " + patientId);
+            }
+        } catch (Exception e) {
+            logger.log(java.util.logging.Level.SEVERE, "Failed to search patient", e);
+        }
+    }
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
+        String patientId = jTextField1.getText();
+        String medication = jTextField3.getText();
+        String dosage = jTextField4.getText();
+        String frequency = jTextField2.getText();
+        String duration = jTextField5.getText();
+        String instructions = jTextField7.getText();
+
+        if (patientId.isEmpty() || medication.isEmpty() || dosage.isEmpty() || frequency.isEmpty() || duration.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in Patient ID, Medication, Dosage, Frequency, and Duration!");
+            return;
+        }
+
+        String doctorId = clinicmanagementsystem.util.SessionManager.getCurrentUserId();
+        if (doctorId == null) doctorId = DOCTOR_ID; // fallback
+
+        String prescriptionId = generatePrescriptionId();
+        String date = java.time.LocalDate.now().toString();
+        
+        // Match the 9 columns of prescriptions.txt: prescriptionId,patientId,doctorId,medication,dosage,frequency,duration,instructions,date
+        String newLine = prescriptionId + "," + patientId + "," + doctorId + "," + medication + "," + dosage + "," + frequency + "," + duration + "," + instructions + "," + date;
+
+        try {
+            FileManager.appendLine(FILE_PATH, newLine);
+            JOptionPane.showMessageDialog(this, "Prescription saved!");
+            clearField();
+        } catch (Exception e) {
+            logger.log(java.util.logging.Level.SEVERE, "Failed to save prescription", e);
+            JOptionPane.showMessageDialog(this, "Failed to save prescription!");
+        }
+    }
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
+        clearField();
+    }
 
     /**
      * @param args the command line arguments
@@ -90,5 +307,21 @@ public class PrescribeMedicationGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
 }

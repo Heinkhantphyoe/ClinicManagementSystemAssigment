@@ -163,27 +163,27 @@ public class PatientLoginGUI extends javax.swing.JFrame {
 
                 String patientId = parts[0].trim();
                 String name      = parts[1].trim();
-                String gender    = parts[2].trim();
-                String phone     = parts[3].trim();
-                String email     = parts[4].trim();
+                String filePass  = parts[2].trim();
+                String gender    = parts[3].trim();
+                String phone     = parts[4].trim();
+                String email     = parts[5].trim();
                 int    age       = 0;
-                try { age = Integer.parseInt(parts[5].trim()); } catch (NumberFormatException ignored) {}
-                String bloodType         = parts[6].trim();
-                String address           = parts[7].trim();
-                String emergencyContact  = parts[8].trim();
+                try { age = Integer.parseInt(parts[6].trim()); } catch (NumberFormatException ignored) {}
+                String bloodType         = parts[7].trim();
+                String address           = parts[8].trim();
+                String emergencyContact  = parts[9].trim();
 
                 // Match username: patientId, name, or email
                 boolean userMatch = enteredUser.equalsIgnoreCase(patientId)
                                  || enteredUser.equalsIgnoreCase(name)
                                  || enteredUser.equalsIgnoreCase(email);
 
-                // Match password: phone or patientId
-                boolean passMatch = enteredPass.equals(phone)
-                                 || enteredPass.equalsIgnoreCase(patientId);
+                // Match password: filePass
+                boolean passMatch = enteredPass.equals(filePass);
 
                 if (userMatch && passMatch) {
                     loggedInPatient = new clinicmanagementsystem.model.Patient(
-                        patientId, name, gender, phone, email,
+                        patientId, name, filePass, gender, phone, email,
                         age, bloodType, address, emergencyContact
                     );
                     break;

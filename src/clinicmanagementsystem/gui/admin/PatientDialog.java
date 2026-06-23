@@ -85,7 +85,13 @@ public class PatientDialog extends javax.swing.JDialog {
                     continue;
                 }
                 String[] parts = line.split(",");
-                model.addRow(parts);
+                if (parts.length >= 10) {
+                    // Skip parts[2] which is password
+                    String[] filteredParts = {
+                        parts[0], parts[1], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8], parts[9]
+                    };
+                    model.addRow(filteredParts);
+                }
             }
         } catch (java.io.IOException e) {
             e.printStackTrace();

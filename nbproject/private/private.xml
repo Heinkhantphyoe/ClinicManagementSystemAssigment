@@ -21,6 +21,17 @@
             <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/model/Appointment.java</file>
             <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/gui/AdminDashboardGUI.java</file>
             <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/util/FileManager.java</file>
+            <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/gui/receptionist/AssignDoctorAndNurseGUI.java</file>
+            <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/gui/receptionist/CollectPaymentGUI.java</file>
+            <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/gui/doctor/MyRosterGUI.java</file>
+            <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/gui/doctor/PrescribeMedicationGUI.java</file>
+            <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/gui/doctor/AssignedAppointmentGUI.java</file>
+            <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/gui/doctor/ManageMedicalRecordGUI.java</file>
+            <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/data/prescriptions.txt</file>
+            <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/gui/DoctorDashboardGUI.java</file>
+            <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/model/Patient.java</file>
+            <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/model/Doctor.java</file>
+            <file>file:/D:/APU/sem3/OOP/assigment/ClinicManagementSystem/src/clinicmanagementsystem/model/Payment.java</file>
         </group>
     </open-files>
 </project-private>

@@ -3,24 +3,112 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package clinicmanagementsystem.gui.doctor;
-
+import javax.swing.table.DefaultTableModel;
 import clinicmanagementsystem.gui.DoctorDashboardGUI;
+import clinicmanagementsystem.util.FileManager;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
  * @author Acer
  */
 public class MyRosterGUI extends javax.swing.JFrame {
-    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MyRosterGUI.class.getName());
-
+    private DefaultTableModel model = new DefaultTableModel();
+    private String[] columnName = {"ROSTER ID" , "NAME" , "DATE" , "SHIFT"};
+    
+    
+    
     /**
      * Creates new form MyRosterGUI
      */
     public MyRosterGUI() {
+        model.setColumnIdentifiers(columnName);
         initComponents();
+        
+        // Add action listener here so NetBeans doesn't erase it
+        searchBtn.addActionListener(this::searchBtnActionPerformed);
+        
+        addRosterIntoTable();
+        setMinimumSize(getSize());
     }
+    private String[] loadRoster(){
+      try {
+            return FileManager.readLines("src/clinicmanagementsystem/data/rosters.txt");
+        }
+        catch(Exception e){
+            logger.log(java.util.logging.Level.SEVERE, "Failed to load rosters", e);
+        }
+        return new String[0];
+    }
+    
+    private void addRosterIntoTable(){
+        try {
+            model.setRowCount(0);
+            String[] lines = loadRoster();
+            String currentUserId = clinicmanagementsystem.util.SessionManager.getCurrentUserId();
+            if (currentUserId == null) currentUserId = "";
 
+            for(String line : lines) {
+                if (line == null || line.isEmpty()) {
+                    continue;
+                }
+                String[] fields = line.split(",");
+                if (fields.length < columnName.length) {
+                    continue;
+                }
+                if (!fields[1].equalsIgnoreCase(currentUserId)) {
+                    continue;
+                }
+                // fields: rosterId(0), staffId(1), staffName(2), role(3), dutyDate(4), shift(5)
+                String rosterId = fields[0];
+                String name = fields[2];
+                String date = fields[4];
+                String time = fields.length > 5 ? fields[5] : "";
+                model.addRow(new String[]{ rosterId, name, date, time }); 
+            }
+        }
+        catch(Exception e) {
+                 logger.log(java.util.logging.Level.SEVERE, "Failed to load rosters", e);
+                }
+    }
+    
+    private void searchByDate(String targetDate){
+        try {
+            model.setRowCount(0);
+            String[] lines = loadRoster();
+            String currentUserId = clinicmanagementsystem.util.SessionManager.getCurrentUserId();
+            if (currentUserId == null) currentUserId = "";
+
+            for(String line : lines) {
+                if (line == null || line.isEmpty()) {
+                    continue;
+                }
+                String[] fields = line.split(",");
+                if (fields.length < 4) {
+                    continue;
+                }
+                if (!fields[1].equalsIgnoreCase(currentUserId)) {
+                    continue;
+                }
+                String date = fields[4];
+                if (!targetDate.trim().isEmpty() && !date.contains(targetDate.trim())) {
+                    continue; // skip if date doesn't match
+                }
+                
+                String rosterId = fields[0];
+                String name = fields[2];
+                String time = fields.length > 5 ? fields[5] : "";
+                model.addRow(new String[]{ rosterId, name, date, time }); 
+            }
+        }
+        catch(Exception e) {
+            logger.log(java.util.logging.Level.SEVERE, "Failed to load rosters for search", e);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,27 +119,73 @@ public class MyRosterGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         backButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        searchBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         backButton.setText("Back");
         backButton.addActionListener(this::backButtonActionPerformed);
 
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel1.setText("My Roster");
+
+        jTable1.setModel(model
+        );
+        jScrollPane1.setViewportView(jTable1);
+
+        jButton1.setText("Refresh");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        searchBtn.setText("Search");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(246, 246, 246))
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(backButton)
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(backButton)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap(53, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(searchBtn)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(263, Short.MAX_VALUE)
-                .addComponent(backButton)
-                .addGap(14, 14, 14))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchBtn))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(backButton))
+                .addGap(56, 56, 56))
         );
 
         pack();
@@ -62,6 +196,23 @@ public class MyRosterGUI extends javax.swing.JFrame {
         doctorDashboardGUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        jTextField1.setText("");
+        addRosterIntoTable();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {
+        String targetDate = jTextField1.getText().trim();
+        if (!targetDate.isEmpty() && !clinicmanagementsystem.util.ValidationUtil.isValidDate(targetDate)) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Wrong date format! Please enter as YYYY-MM-DD", 
+                "Invalid Date", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        searchByDate(targetDate);
+    }
 
     /**
      * @param args the command line arguments
@@ -90,5 +241,11 @@ public class MyRosterGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton searchBtn;
     // End of variables declaration//GEN-END:variables
 }

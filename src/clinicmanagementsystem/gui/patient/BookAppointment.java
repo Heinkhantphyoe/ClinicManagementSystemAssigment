@@ -51,6 +51,8 @@ public class BookAppointment extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
         panel1 = new java.awt.Panel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        timeTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -102,6 +104,9 @@ public class BookAppointment extends javax.swing.JDialog {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "General Checkup", "Follow-up", "Blood Test", "Dental", "Eye Examination", "Specialist Consultation", "Emergency" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(64, 22));
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jLabel4.setText("Time");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,14 +126,17 @@ public class BookAppointment extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextField2)
                                     .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTextField5)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(timeTextField)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -146,34 +154,33 @@ public class BookAppointment extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(timeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(0, 70, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))))
+                    .addComponent(jLabel5)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addGap(19, 19, 19))
+                .addComponent(jButton3))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextField1, jTextField2, jTextField5});
@@ -190,14 +197,15 @@ public class BookAppointment extends javax.swing.JDialog {
     // field တွေကနေ data ဖတ်တယ်
         String patientId = currentPatientId;
         String date      = jTextField2.getText().trim();
+        String time      = timeTextField.getText().trim();
         String type      = jComboBox1.getSelectedItem().toString();
         String reason    = jTextField5.getText().trim();
         String status    = "Pending"; // patient က status မပြောင်းနိုင်
 
-        // date နဲ့ reason blank ဖြစ်ရင် warning ပြတယ်
-        if (date.isEmpty() || reason.isEmpty()) {
+        // date, time နဲ့ reason blank ဖြစ်ရင် warning ပြတယ်
+        if (date.isEmpty() || time.isEmpty() || reason.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                "Please fill in Date and Reasons!",
+                "Please fill in Date, Time, and Reasons!",
                 "Missing Information",
                 javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
@@ -213,17 +221,28 @@ public class BookAppointment extends javax.swing.JDialog {
             jTextField2.requestFocus();
             return;
         }
+        
+        // time format မှားရင် warning ပြတယ်
+        if (!time.matches("^([01]?\\d|2[0-3]):[0-5]\\d$")) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Wrong time format!\nPlease enter as HH:MM",
+                "Wrong Format",
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            timeTextField.setText("");
+            timeTextField.requestFocus();
+            return;
+        }
 
         // A001, A002 စသဖြင့် auto ID ထုတ်တယ်
         String apptId = generateAppointmentId();
 
         // History table ထဲ ချက်ချင်းထည့်တယ် (model null မဟုတ်ရင်)
         if (model != null) {
-            model.addRow(new String[]{apptId, patientId, date, "", "", type, reason, status});
+            model.addRow(new String[]{apptId, patientId, date, time, "", type, reason, status});
         }
 
         // format: apptId,patientId,doctorId,nurseId,date,time,type,status,reason
-        String line = apptId + "," + patientId + ",N/A,N/A," + date + ",," + type + "," + status + "," + reason;
+        String line = apptId + "," + patientId + ",N/A,N/A," + date + "," + time + "," + type + "," + status + "," + reason;
 
         // file ထဲ save တယ်
         try {
@@ -259,12 +278,11 @@ public class BookAppointment extends javax.swing.JDialog {
 
     // Patient ID မဖျက်ဘူး
     jTextField2.setText(""); // Date
+    timeTextField.setText(""); // Time
     jTextField5.setText(""); // Reason
 
     // ComboBox ကို ပထမ item ပြန်ထား
     jComboBox1.setSelectedIndex(0);
-
-   
 
     // Cursor ကို Date field ဆီပို့
     jTextField2.requestFocus();
@@ -343,12 +361,14 @@ public class BookAppointment extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField5;
     private java.awt.Panel panel1;
+    private javax.swing.JTextField timeTextField;
     // End of variables declaration//GEN-END:variables
 }
 
