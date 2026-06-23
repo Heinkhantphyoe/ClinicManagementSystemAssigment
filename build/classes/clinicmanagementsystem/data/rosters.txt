@@ -1,3 +1,7 @@
-R001,U002,Doctor,2026-06-04,Morning
-R002,U003,Nurse,2026-06-04,Morning
-R003,U004,Receptionist,2026-06-04,Full Day
+rosterId,staffId,staffName,role,dutyDate,shift
+R001,U002,Doctor User,Doctor,2026-06-04,Morning
+R002,U003,Nurse User,Nurse,2026-06-04,Morning
+R003,U004,Receptionist User,Receptionist,2026-06-04,Morning
+R004,U005,Doctor new,Doctor,2026-06-04,Morning
+R006,U003,Nurse User,Nurse,2026-06-04,Morning
+R007,U003,Nurse User,Nurse,2026-06-04,Afternoon

@@ -6,18 +6,20 @@ public class MedicalRecord {
     private String doctorId;
     private String diagnosis;
     private String treatment;
+    private String doctorNote;
     private String visitDate;
 
     public MedicalRecord() {
     }
 
     public MedicalRecord(String recordId, String patientId, String doctorId, String diagnosis,
-            String treatment, String visitDate) {
+            String treatment, String doctorNote, String visitDate) {
         this.recordId = recordId;
         this.patientId = patientId;
         this.doctorId = doctorId;
         this.diagnosis = diagnosis;
         this.treatment = treatment;
+        this.doctorNote = doctorNote;
         this.visitDate = visitDate;
     }
 
@@ -61,6 +63,14 @@ public class MedicalRecord {
         this.treatment = treatment;
     }
 
+    public String getDoctorNote() {
+        return doctorNote;
+    }
+
+    public void setDoctorNote(String doctorNote) {
+        this.doctorNote = doctorNote;
+    }
+
     public String getVisitDate() {
         return visitDate;
     }
@@ -72,6 +82,6 @@ public class MedicalRecord {
     @Override
     public String toString() {
         return recordId + "," + patientId + "," + doctorId + "," + diagnosis + ","
-                + treatment + "," + visitDate;
+                + treatment + "," + doctorNote + "," + visitDate;
     }
 }

@@ -1,2 +1,3 @@
-MR001,P001,U002,Common Cold,Rest and fluids,2026-05-20
-MR002,P002,U002,Slight Fever,Paracetamol and rest,2026-05-22
+recordId,patientId,doctorId,diagnosis,treatment,notes,date
+MR001,P001,U002,Common Cold,Rest and fluids,to come again,2026-05-20
+MR002,P002,U002,Slight Fever,Paracetamol and rest,to come again,2026-05-22

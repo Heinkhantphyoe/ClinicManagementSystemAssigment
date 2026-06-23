@@ -1,0 +1,14 @@
+6. Status (e.g., Scheduled): 
+The current state of the appointment (e.g.,Pending, Scheduled, Completed, Cancelled).
+
+
+
+user.txt
+User ID: U002
+  • Name: Doctor User
+  • Gender: Female
+  • Phone Number: 0123456790
+  • Email: doctor@clinic.com
+  • Username: doctor
+  • Password: doctor123
+  • Role: Doctor

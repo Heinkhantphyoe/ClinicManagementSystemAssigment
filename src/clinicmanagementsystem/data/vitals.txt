@@ -1,2 +1,3 @@
-V001,P001,36.5,120/80,72,2026-06-04
-V002,P002,37.2,110/70,80,2026-06-04
+vitalId,patientId,temperature,bloodPressure,heartRate,weight,notes,date
+V001,P001,25,120/90,80,65,it is good result,2026-06-23
+V002,P001,28,100/90,99,66,good,2026-06-23

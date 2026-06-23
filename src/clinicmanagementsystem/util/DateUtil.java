@@ -23,4 +23,13 @@ public class DateUtil {
     public static LocalDate parseDate(String value) {
         return LocalDate.parse(value, DATE_FORMAT);
     }
+
+    public static boolean isValidDate(String date) {
+        try {
+            LocalDate.parse(date, DATE_FORMAT);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

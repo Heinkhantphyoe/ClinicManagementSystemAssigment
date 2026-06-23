@@ -3,6 +3,7 @@ package clinicmanagementsystem.model;
 public class Roster {
     private String rosterId;
     private String staffId;
+    private String staffName;
     private String staffRole;
     private String dutyDate;
     private String shift;
@@ -10,9 +11,10 @@ public class Roster {
     public Roster() {
     }
 
-    public Roster(String rosterId, String staffId, String staffRole, String dutyDate, String shift) {
+    public Roster(String rosterId, String staffId, String staffName, String staffRole, String dutyDate, String shift) {
         this.rosterId = rosterId;
         this.staffId = staffId;
+        this.staffName = staffName;
         this.staffRole = staffRole;
         this.dutyDate = dutyDate;
         this.shift = shift;
@@ -32,6 +34,14 @@ public class Roster {
 
     public void setStaffId(String staffId) {
         this.staffId = staffId;
+    }
+
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
     }
 
     public String getStaffRole() {
@@ -60,6 +70,6 @@ public class Roster {
 
     @Override
     public String toString() {
-        return rosterId + "," + staffId + "," + staffRole + "," + dutyDate + "," + shift;
+        return rosterId + "," + staffId + "," + staffName + "," + staffRole + "," + dutyDate + "," + shift;
     }
 }

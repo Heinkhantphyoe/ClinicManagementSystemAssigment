@@ -4,23 +4,25 @@ public class Appointment {
     private String appointmentId;
     private String patientId;
     private String doctorId;
+    private String nurseId;
     private String appointmentDate;
     private String appointmentTime;
     private String status;
-    private String notes;
+    private String appointType;
 
     public Appointment() {
     }
 
-    public Appointment(String appointmentId, String patientId, String doctorId, String appointmentDate,
-            String appointmentTime, String status, String notes) {
+    public Appointment(String appointmentId, String patientId, String doctorId, String nurseId, String appointmentDate,
+            String appointmentTime, String status, String appointType) {
         this.appointmentId = appointmentId;
         this.patientId = patientId;
         this.doctorId = doctorId;
+        this.nurseId = nurseId;
         this.appointmentDate = appointmentDate;
         this.appointmentTime = appointmentTime;
         this.status = status;
-        this.notes = notes;
+        this.appointType = appointType;
     }
 
     public String getAppointmentId() {
@@ -47,6 +49,14 @@ public class Appointment {
         this.doctorId = doctorId;
     }
 
+    public String getNurseId() {
+        return nurseId;
+    }
+
+    public void setNurseId(String nurseId) {
+        this.nurseId = nurseId;
+    }
+
     public String getAppointmentDate() {
         return appointmentDate;
     }
@@ -71,17 +81,17 @@ public class Appointment {
         this.status = status;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getAppointType() {
+        return appointType;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setAppointType(String appointType) {
+        this.appointType = appointType;
     }
 
     @Override
     public String toString() {
-        return appointmentId + "," + patientId + "," + doctorId + "," + appointmentDate + ","
-                + appointmentTime + "," + status + "," + notes;
+        return appointmentId + "," + patientId + "," + doctorId + "," + nurseId + "," + appointmentDate + ","
+                + appointmentTime + "," + appointType + "," + status;
     }
 }

@@ -11,16 +11,84 @@ package clinicmanagementsystem.gui.patient;
  */
 public class Prescription extends javax.swing.JDialog {
     
+    private String patientId;
+       
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Prescription.class.getName());
 
     /**
      * Creates new form Prescription
      */
-    public Prescription(java.awt.Frame parent, boolean modal) {
+    public Prescription(java.awt.Frame parent, boolean modal, String patientId) {
         super(parent, modal);
+        this.patientId = patientId;
         initComponents();
+        loadPrescriptions(null);
     }
 
+    private void loadPrescriptions(String dateFilter) {
+ 
+        javax.swing.table.DefaultTableModel model =
+            (javax.swing.table.DefaultTableModel) tblPrescriptions.getModel();
+        model.setRowCount(0);
+ 
+        String searchDate = "";
+        if (dateFilter != null) {
+            searchDate = dateFilter.trim();
+        }
+ 
+        String filePath = "src/clinicmanagementsystem/data/prescriptions.txt";
+ 
+        try {
+            java.io.BufferedReader br = new java.io.BufferedReader(
+                new java.io.FileReader(filePath));
+            String line;
+ 
+            while ((line = br.readLine()) != null) {
+                if (line.trim().isEmpty()) continue;
+ 
+                String[] parts = line.split(",");
+                if (parts.length < 9) continue; // column 9 ခု မပြည့်ရင် ဒီ line ကျော်မယ်
+ 
+                // prescriptions.txt ရဲ့ column အစီအစဉ်:
+                // PrescID, PatientID, Doctor, Medicine, Dosage, Frequency, Duration, Instructions, Date
+                String prescId        = parts[0].trim(); // RX001
+                String filePatientId  = parts[1].trim(); // P001
+                String doctor         = parts[2].trim(); // U002
+                String medicine       = parts[3].trim();
+                String dosage         = parts[4].trim();
+                String frequency      = parts[5].trim();
+                String duration       = parts[6].trim();
+                String instructions   = parts[7].trim();
+                String prescDate      = parts[8].trim();
+ 
+                // Login လုပ်ထားတဲ့ patient ရဲ့ data ပဲထည့်မယ်
+                if (filePatientId.equals(patientId) == false) {
+                    continue;
+                }
+ 
+                // date filter ထည့်ထားရင် ဒီ date ပါမှ ထည့်မယ်
+                if (searchDate.isEmpty() == false) {
+                    if (prescDate.contains(searchDate) == false) {
+                        continue;
+                    }
+                }
+ 
+                Object[] row = {prescId, doctor, medicine, dosage, frequency, duration, instructions, prescDate};
+                model.addRow(row);
+            }
+            br.close();
+ 
+            // filter ထည့်ပြီးမှ data မတွေ့ရင် message ပြမယ်
+            if (searchDate.isEmpty() == false && model.getRowCount() == 0) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                    "No prescriptions found for date: " + searchDate);
+            }
+ 
+        } catch (java.io.IOException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Error loading prescriptions: " + e.getMessage());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,14 +101,16 @@ public class Prescription extends javax.swing.JDialog {
         lblTitle = new javax.swing.JLabel();
         lblFilterDate = new javax.swing.JLabel();
         txtFilterDate = new javax.swing.JTextField();
-        btnRefresh = new javax.swing.JButton();
         btnFilter = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPrescriptions = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(560, 520));
+        setMinimumSize(new java.awt.Dimension(700, 500));
+        setPreferredSize(new java.awt.Dimension(700, 500));
+        setSize(new java.awt.Dimension(700, 500));
+        setType(java.awt.Window.Type.POPUP);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblTitle.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
@@ -53,21 +123,20 @@ public class Prescription extends javax.swing.JDialog {
         getContentPane().add(lblFilterDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 55, -1, -1));
 
         txtFilterDate.setPreferredSize(new java.awt.Dimension(150, 25));
+        txtFilterDate.addActionListener(this::txtFilterDateActionPerformed);
         getContentPane().add(txtFilterDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(108, 55, -1, -1));
-
-        btnRefresh.setText("Refresh");
-        btnRefresh.setPreferredSize(new java.awt.Dimension(80, 25));
-        getContentPane().add(btnRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(365, 55, -1, -1));
 
         btnFilter.setText("Filter");
         btnFilter.setPreferredSize(new java.awt.Dimension(80, 25));
-        getContentPane().add(btnFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 55, -1, -1));
+        btnFilter.addActionListener(this::btnFilterActionPerformed);
+        getContentPane().add(btnFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 55, 90, -1));
 
         btnBack.setText("Back");
         btnBack.setPreferredSize(new java.awt.Dimension(80, 25));
+        btnBack.addActionListener(this::btnBackActionPerformed);
         getContentPane().add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 55, -1, -1));
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(520, 340));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(520, 400));
 
         tblPrescriptions.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,28 +146,43 @@ public class Prescription extends javax.swing.JDialog {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Presc ID", "Date", "Doctor", "Medicine", "Dosage", "Frequency", "Duration", "Instructions"
+                "Presc ID", "Doctor", "Medicine", "Dosage", "Frequency", "Duration", "Instructions", "Date"
             }
         ));
         tblPrescriptions.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tblPrescriptions.setPreferredSize(new java.awt.Dimension(900, 150));
         tblPrescriptions.setRowHeight(24);
         tblPrescriptions.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tblPrescriptions);
         if (tblPrescriptions.getColumnModel().getColumnCount() > 0) {
             tblPrescriptions.getColumnModel().getColumn(0).setPreferredWidth(60);
             tblPrescriptions.getColumnModel().getColumn(1).setPreferredWidth(65);
-            tblPrescriptions.getColumnModel().getColumn(2).setPreferredWidth(65);
-            tblPrescriptions.getColumnModel().getColumn(3).setPreferredWidth(70);
-            tblPrescriptions.getColumnModel().getColumn(4).setPreferredWidth(55);
-            tblPrescriptions.getColumnModel().getColumn(5).setPreferredWidth(65);
-            tblPrescriptions.getColumnModel().getColumn(6).setPreferredWidth(60);
-            tblPrescriptions.getColumnModel().getColumn(7).setPreferredWidth(80);
+            tblPrescriptions.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblPrescriptions.getColumnModel().getColumn(3).setPreferredWidth(85);
+            tblPrescriptions.getColumnModel().getColumn(4).setPreferredWidth(120);
+            tblPrescriptions.getColumnModel().getColumn(5).setPreferredWidth(100);
+            tblPrescriptions.getColumnModel().getColumn(6).setPreferredWidth(150);
+            tblPrescriptions.getColumnModel().getColumn(7).setPreferredWidth(100);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 100, 520, 340));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 100, 630, 280));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void txtFilterDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterDateActionPerformed
+        String dateText = txtFilterDate.getText();
+        loadPrescriptions(dateText);
+    }//GEN-LAST:event_txtFilterDateActionPerformed
+
+    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
+        String dateText = txtFilterDate.getText();
+        loadPrescriptions(dateText);
+    }//GEN-LAST:event_btnFilterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -120,12 +204,21 @@ public class Prescription extends javax.swing.JDialog {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Prescription dialog = new Prescription(new javax.swing.JFrame(), true);
+                Prescription dialog = new Prescription(new javax.swing.JFrame(), true, "P001");
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -140,7 +233,6 @@ public class Prescription extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnFilter;
-    private javax.swing.JButton btnRefresh;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFilterDate;
     private javax.swing.JLabel lblTitle;

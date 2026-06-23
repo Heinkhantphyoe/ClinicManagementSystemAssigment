@@ -12,13 +12,63 @@ package clinicmanagementsystem.gui.patient;
 public class AppointmentHistory extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AppointmentHistory.class.getName());
-
+    private String currentPatientId;
+    private javax.swing.table.DefaultTableModel model;
     /**
      * Creates new form AppointmentHistory
      */
-    public AppointmentHistory(java.awt.Frame parent, boolean modal) {
+    public AppointmentHistory(java.awt.Frame parent, boolean modal, String patientId) {
         super(parent, modal);
+        this.currentPatientId = patientId;
         initComponents();
+        model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        loadAppointmentHistory();
+    }
+   
+
+    private String getUserName(String userId) {
+        if (userId.equals("N/A") || userId.isEmpty()) return "N/A";
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("src/clinicmanagementsystem/data/users.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.trim().isEmpty()) continue;
+                String[] parts = line.split(",");
+                if (parts[0].equalsIgnoreCase(userId) && parts.length > 1) {
+                    return parts[1];
+                }
+            }
+        } catch (java.io.IOException e) {}
+        return userId; // Fallback to ID if not found
+    }
+
+    private void loadAppointmentHistory() {
+        model.setRowCount(0);
+        String filePath = "src/clinicmanagementsystem/data/appointments.txt";
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.trim().isEmpty()) continue;
+                String[] parts = line.split(",");
+                if (parts.length < 6) continue;
+
+                // format: apptId[0],patientId[1],doctorId[2],nurseId[3],date[4],time[5],type[6],status[7],reason[8]
+                if (parts[1].trim().equals(currentPatientId)) {
+                    model.addRow(new String[]{
+                        parts[0].trim(),                             // Appt ID
+                        parts[4].trim(),                             // Date
+                        parts[5].trim(),                             // Time
+                        getUserName(parts[2].trim()),                // Doctor Name
+                        getUserName(parts[3].trim()),                // Nurse Name
+                        parts.length > 6 ? parts[6].trim() : "",    // Appointment Type
+                        parts.length > 8 ? parts[8].trim() : "",    // Reason
+                        parts.length > 7 ? parts[7].trim() : ""     // Status
+                    });
+                }
+            }
+        } catch (java.io.IOException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error loading appointments: " + e.getMessage());
+        }
     }
 
     /**
@@ -34,13 +84,11 @@ public class AppointmentHistory extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(580, 430));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -58,7 +106,7 @@ public class AppointmentHistory extends javax.swing.JDialog {
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel2.setPreferredSize(new java.awt.Dimension(110, 25));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Pending", "Completed", "Cancelled" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Pending", "Scheduled", "Completed", "Cancelled" }));
         jComboBox1.setAlignmentX(70.0F);
         jComboBox1.setAlignmentY(60.0F);
         jComboBox1.setPreferredSize(new java.awt.Dimension(150, 25));
@@ -69,18 +117,14 @@ public class AppointmentHistory extends javax.swing.JDialog {
         jButton1.setAlignmentY(60.0F);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setPreferredSize(new java.awt.Dimension(80, 25));
-
-        jButton2.setText("Refresh");
-        jButton2.setAlignmentX(365.0F);
-        jButton2.setAlignmentY(60.0F);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setPreferredSize(new java.awt.Dimension(80, 25));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton3.setText("Back");
         jButton3.setAlignmentX(455.0F);
         jButton3.setAlignmentY(60.0F);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setPreferredSize(new java.awt.Dimension(80, 25));
+        jButton3.addActionListener(this::jButton3ActionPerformed);
 
         jScrollPane6.setPreferredSize(new java.awt.Dimension(540, 280));
 
@@ -92,7 +136,7 @@ public class AppointmentHistory extends javax.swing.JDialog {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Appt ID", "Date ", "Time", "Doctor", "Nurse", "Type", "Reason", "Status"
+                "Appt ID", "Date ", "Time", "Doctor", "Nurse", "Appointment Type", "Reason", "Status"
             }
         ));
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -102,13 +146,12 @@ public class AppointmentHistory extends javax.swing.JDialog {
         jScrollPane6.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(55);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(75);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(60);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(90);
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(55);
             jTable1.getColumnModel().getColumn(3).setPreferredWidth(75);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(65);
-            jTable1.getColumnModel().getColumn(5).setPreferredWidth(60);
-            jTable1.getColumnModel().getColumn(6).setPreferredWidth(75);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(95);
+            jTable1.getColumnModel().getColumn(6).setPreferredWidth(95);
             jTable1.getColumnModel().getColumn(7).setPreferredWidth(65);
         }
 
@@ -123,17 +166,13 @@ public class AppointmentHistory extends javax.swing.JDialog {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(63, 63, 63)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(71, 71, 71)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,7 +184,6 @@ public class AppointmentHistory extends javax.swing.JDialog {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,6 +197,56 @@ public class AppointmentHistory extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String selectedStatus = jComboBox1.getSelectedItem().toString();
+    model.setRowCount(0);
+
+    String filePath = "src/clinicmanagementsystem/data/appointments.txt";
+
+    try (java.io.BufferedReader br =
+         new java.io.BufferedReader(new java.io.FileReader(filePath))) {
+        String line;
+        while ((line = br.readLine()) != null) {
+            if (line.trim().isEmpty()) continue;
+
+            String[] parts = line.split(",");
+            if (parts.length < 6) continue;
+
+            if (!parts[1].trim().equals(currentPatientId)) continue;
+
+            // format: apptId[0],patientId[1],doctorId[2],nurseId[3],date[4],time[5],type[6],status[7],reason[8]
+            String status = parts.length > 7 ? parts[7].trim() : "";
+            if (selectedStatus.equals("All") || status.equalsIgnoreCase(selectedStatus)) {
+                model.addRow(new String[]{
+                    parts[0].trim(),                             // Appt ID
+                    parts[4].trim(),                             // Date
+                    parts[5].trim(),                             // Time
+                    getUserName(parts[2].trim()),                // Doctor Name
+                    getUserName(parts[3].trim()),                // Nurse Name
+                    parts.length > 6 ? parts[6].trim() : "",    // Appointment Type
+                    parts.length > 8 ? parts[8].trim() : "",    // Reason
+                    parts.length > 7 ? parts[7].trim() : ""     // Status
+                });
+            }
+        }
+
+        if (model.getRowCount() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "No appointments found for status: " + selectedStatus);
+        }
+
+    } catch (java.io.IOException e) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Error: " + e.getMessage());
+    }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+    public javax.swing.table.DefaultTableModel getTableModel() {
+    return model;
+}
     /**
      * @param args the command line arguments
      */
@@ -184,7 +272,8 @@ public class AppointmentHistory extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                AppointmentHistory dialog = new AppointmentHistory(new javax.swing.JFrame(), true);
+                String patientId = clinicmanagementsystem.util.SessionManager.getCurrentPatientId();
+                AppointmentHistory dialog = new AppointmentHistory(new javax.swing.JFrame(), true, patientId != null ? patientId : "");
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -198,7 +287,6 @@ public class AppointmentHistory extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;

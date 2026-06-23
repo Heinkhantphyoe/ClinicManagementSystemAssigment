@@ -1,12 +1,16 @@
 package clinicmanagementsystem.model;
 
 public class Prescription {
+
     private String prescriptionId;
     private String patientId;
     private String doctorId;
     private String medicineName;
     private String dosage;
+    private String frequency;
+    private String duration;
     private String instructions;
+    private String date;
 
     public Prescription() {
     }
@@ -18,7 +22,10 @@ public class Prescription {
         this.doctorId = doctorId;
         this.medicineName = medicineName;
         this.dosage = dosage;
+        this.frequency = frequency;
+        this.duration = duration;
         this.instructions = instructions;
+        this.date = date;
     }
 
     public String getPrescriptionId() {
@@ -69,9 +76,33 @@ public class Prescription {
         this.instructions = instructions;
     }
 
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return prescriptionId + "," + patientId + "," + doctorId + "," + medicineName + ","
-                + dosage + "," + instructions;
+                + dosage + "," + frequency + "," + duration + "," + instructions + "," + date;
     }
 }

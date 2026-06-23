@@ -4,7 +4,10 @@
  */
 package clinicmanagementsystem.gui;
 
+import clinicmanagementsystem.gui.admin.GenerateRevenueGUI;
+import clinicmanagementsystem.gui.admin.ManageStaffRoster;
 import clinicmanagementsystem.gui.admin.ManageUserGUI;
+import clinicmanagementsystem.gui.admin.SystemDashboardGUI;
 
 /**
  *
@@ -47,6 +50,7 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setText("Manage Staff Roster");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jButton3.setText("Generate Revenue Report");
         jButton3.addActionListener(this::jButton3ActionPerformed);
@@ -54,6 +58,7 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         jButton4.setText(" Logout");
 
         jButton5.setText("System Dashboard");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
 
         jButton6.setText("Exit");
 
@@ -105,7 +110,9 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        GenerateRevenueGUI revenueGUI = new GenerateRevenueGUI();
+        revenueGUI.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -113,6 +120,18 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         manageUserGUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ManageStaffRoster staffRoster = new ManageStaffRoster();
+        staffRoster.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        SystemDashboardGUI systemGUI = new SystemDashboardGUI();
+        systemGUI.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

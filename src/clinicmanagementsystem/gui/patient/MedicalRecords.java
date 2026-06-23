@@ -11,16 +11,76 @@ package clinicmanagementsystem.gui.patient;
  */
 public class MedicalRecords extends javax.swing.JDialog {
     
+    private String patientId;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MedicalRecords.class.getName());
 
     /**
      * Creates new form MedicalRecords
      */
-    public MedicalRecords(java.awt.Frame parent, boolean modal) {
+    public MedicalRecords(java.awt.Frame parent, boolean modal, String patientId) {
         super(parent, modal);
+        this.patientId = patientId;
         initComponents();
+        loadMedicalRecords(null); // အစမှာ filter မလုပ်ဘဲ record အားလုံးပြမယ်
+    }
+    
+private void loadMedicalRecords(String dateFilter) {
+
+    javax.swing.table.DefaultTableModel model = 
+        (javax.swing.table.DefaultTableModel) jTable1.getModel();
+    model.setRowCount(0);
+    
+    String searchDate = "";
+    if (dateFilter != null) {
+        searchDate = dateFilter.trim();
     }
 
+    String filePath = "src/clinicmanagementsystem/data/medical_records.txt";
+
+    try {
+        java.io.BufferedReader br = new java.io.BufferedReader(
+            new java.io.FileReader(filePath));
+        String line;
+
+        while ((line = br.readLine()) != null) {
+            if (line.trim().isEmpty()) continue;
+
+            String[] parts = line.split(",");
+            if (parts.length < 7) continue;
+
+            String recordId      = parts[0].trim(); // MR001
+            String filePatientId = parts[1].trim(); // P001
+            String doctor        = parts[2].trim(); // U002
+            String diagnosis     = parts[3].trim();
+            String treatment     = parts[4].trim();
+            String notes         = parts[5].trim();
+            String recordDate    = parts[6].trim();
+            
+
+            // Login လုပ်ထားတဲ့ patient ရဲ့ data ပဲထည့်မယ်
+            if (filePatientId.equals(patientId) == false) {
+                continue;
+            }
+            if (searchDate.isEmpty() == false) {
+                if (recordDate.contains(searchDate) == false) {
+                continue;
+            }
+        }
+            // Table columns: Record ID, Doctor, Diagnosis, Treatment, Doctor Notes, Date
+            Object[] row = {recordId, doctor, diagnosis, treatment, notes, recordDate};
+            model.addRow(row);
+        }
+        br.close();
+        if (searchDate.isEmpty() == false && model.getRowCount() == 0) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+        "No records found for date: " + searchDate);
+}
+
+    } catch (java.io.IOException e) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Error loading records: " + e.getMessage());
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,39 +94,32 @@ public class MedicalRecords extends javax.swing.JDialog {
         lblFilterDate = new javax.swing.JLabel();
         txtFilterDate = new javax.swing.JTextField();
         btnFilter = new javax.swing.JButton();
-        btnRefresh = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(570, 430));
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setSize(new java.awt.Dimension(0, 0));
+        setType(java.awt.Window.Type.POPUP);
 
         lblTitle.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         lblTitle.setText("View Medical Records");
         lblTitle.setPreferredSize(new java.awt.Dimension(250, 30));
-        getContentPane().add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 15, -1, -1));
 
         lblFilterDate.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lblFilterDate.setText("Filter by Date:");
         lblFilterDate.setPreferredSize(new java.awt.Dimension(90, 25));
-        getContentPane().add(lblFilterDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 55, -1, -1));
 
         txtFilterDate.setPreferredSize(new java.awt.Dimension(150, 25));
-        getContentPane().add(txtFilterDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(108, 55, -1, -1));
+        txtFilterDate.addActionListener(this::txtFilterDateActionPerformed);
 
         btnFilter.setText("Filter");
         btnFilter.setPreferredSize(new java.awt.Dimension(80, 25));
-        getContentPane().add(btnFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 55, -1, -1));
-
-        btnRefresh.setText("Refresh");
-        btnRefresh.setPreferredSize(new java.awt.Dimension(80, 25));
-        getContentPane().add(btnRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(365, 55, -1, -1));
+        btnFilter.addActionListener(this::btnFilterActionPerformed);
 
         btnBack.setText("Back");
         btnBack.setPreferredSize(new java.awt.Dimension(80, 25));
-        getContentPane().add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 55, -1, -1));
+        btnBack.addActionListener(this::btnBackActionPerformed);
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(520, 280));
 
@@ -78,7 +131,7 @@ public class MedicalRecords extends javax.swing.JDialog {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Record ID", "Date", "Doctor", "Diagnosis", "Treatment", "Doctor Notes"
+                "Record ID", "Doctor", "Diagnosis", "Treatment", "Doctor Notes", "Date"
             }
         ));
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -88,18 +141,65 @@ public class MedicalRecords extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(75);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(90);
             jTable1.getColumnModel().getColumn(1).setPreferredWidth(75);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(90);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(90);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(90);
-            jTable1.getColumnModel().getColumn(5).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(180);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(180);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(180);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(130);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 100, 520, 280));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblFilterDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)
+                        .addComponent(txtFilterDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67)
+                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblFilterDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFilterDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void txtFilterDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterDateActionPerformed
+         String dateText = txtFilterDate.getText();
+        loadMedicalRecords(dateText);
+    }//GEN-LAST:event_txtFilterDateActionPerformed
+
+    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
+        String dateText = txtFilterDate.getText();
+        loadMedicalRecords(dateText);
+    }//GEN-LAST:event_btnFilterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,7 +226,8 @@ public class MedicalRecords extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MedicalRecords dialog = new MedicalRecords(new javax.swing.JFrame(), true);
+                String currentId = clinicmanagementsystem.util.SessionManager.getCurrentPatientId();
+                MedicalRecords dialog = new MedicalRecords(new javax.swing.JFrame(), true, currentId != null ? currentId : "");
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -141,7 +242,6 @@ public class MedicalRecords extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnFilter;
-    private javax.swing.JButton btnRefresh;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblFilterDate;
