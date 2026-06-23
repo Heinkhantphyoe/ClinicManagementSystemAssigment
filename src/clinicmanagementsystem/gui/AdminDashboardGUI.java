@@ -22,6 +22,7 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
      */
     public AdminDashboardGUI() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         setupExitAndLogout();
     }
 

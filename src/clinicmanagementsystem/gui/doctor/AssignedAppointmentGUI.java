@@ -26,6 +26,7 @@ public class AssignedAppointmentGUI extends javax.swing.JFrame {
     public AssignedAppointmentGUI() {
         model.setColumnIdentifiers(columnName);
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         addDataAppointmentIntoTable();
         setMinimumSize(getSize());
     }

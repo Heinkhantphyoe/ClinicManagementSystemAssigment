@@ -25,6 +25,7 @@ public class CollectPayment extends javax.swing.JFrame {
 
     public CollectPayment() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         loadPayments();
     }
 

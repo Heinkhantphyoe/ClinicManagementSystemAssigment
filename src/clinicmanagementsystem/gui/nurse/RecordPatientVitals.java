@@ -23,6 +23,7 @@ public class RecordPatientVitals extends javax.swing.JFrame {
 
     public RecordPatientVitals() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         txtVitalsId.setText(nextVitalId());
         txtVitalsId.setEditable(false);
         txtNurseId.setText(SessionManager.getCurrentUserId());

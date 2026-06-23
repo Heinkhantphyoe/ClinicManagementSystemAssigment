@@ -1,0 +1,10 @@
+========== CLINIC PAYMENT RECEIPT ==========
+Payment ID: PAY001
+Appointment ID: A001
+Patient ID: P001
+Patient Name: Patient User
+Date: 2026-05-20
+Amount: RM 100.0
+Payment Method: Card
+Payment Status: Paid
+===========================================

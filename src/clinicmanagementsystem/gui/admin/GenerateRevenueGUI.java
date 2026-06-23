@@ -25,6 +25,7 @@ public class GenerateRevenueGUI extends javax.swing.JFrame {
     public GenerateRevenueGUI() {
         model.setColumnIdentifiers(columnList);
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         jLabel2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18));
         
         // Re-layout jPanel1 to vertical GridLayout and add programmatically created components
@@ -83,8 +84,8 @@ public class GenerateRevenueGUI extends javax.swing.JFrame {
             for (String line : lines) {
                 if (line.trim().isEmpty()) continue;
                 String[] parts = line.split(",");
-                if (parts.length > 3) {
-                    String date = parts[3].trim();
+                if (parts.length >= 8) {
+                    String date = parts[4].trim();
                     if (date.contains("-")) {
                         String year = date.split("-")[0];
                         years.add(year);
@@ -199,8 +200,8 @@ public class GenerateRevenueGUI extends javax.swing.JFrame {
             for (String line : lines) {
                 if (line.trim().isEmpty()) continue;
                 String[] parts = line.split(",");
-                if (parts.length > 3) {
-                    String dateStr = parts[3].trim();
+                if (parts.length >= 8) {
+                    String dateStr = parts[4].trim();
                     if (dateStr.startsWith(targetPrefix)) {
                         dates.add(dateStr);
                     }
@@ -254,14 +255,14 @@ public class GenerateRevenueGUI extends javax.swing.JFrame {
             String[] lines = clinicmanagementsystem.util.FileManager.readLines("src/clinicmanagementsystem/data/payments.txt");
             for (String line : lines) {
                 if (line.trim().isEmpty()) continue;
-                String[] parts = line.split(",");
-                if (parts.length > 5) {
+                String[] parts = line.split(",", -1);
+                if (parts.length >= 8) {
                     String paymentId = parts[0].trim();
-                    String patientId = parts[1].trim();
-                    String amountStr = parts[2].trim();
-                    String dateStr = parts[3].trim();
-                    String method = parts[4].trim();
-                    String status = parts[5].trim();
+                    String patientId = parts[2].trim();
+                    String amountStr = parts[5].trim();
+                    String dateStr = parts[4].trim();
+                    String method = parts[6].trim();
+                    String status = parts[7].trim();
                     
                     double amount = 0.0;
                     try {

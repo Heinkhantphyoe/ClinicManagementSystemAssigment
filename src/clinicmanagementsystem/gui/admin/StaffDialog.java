@@ -30,6 +30,7 @@ public class StaffDialog extends javax.swing.JDialog {
         this.role = role;
         model.setColumnIdentifiers(columnList);
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         jLabel1.setText("View All " + role);
         loadStaff();
     }

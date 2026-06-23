@@ -25,6 +25,7 @@ public class LoginGUI extends javax.swing.JFrame {
      */
     public LoginGUI() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
     }
 
     /**

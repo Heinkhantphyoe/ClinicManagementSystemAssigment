@@ -21,6 +21,7 @@ public class MedicalRecords extends javax.swing.JDialog {
         super(parent, modal);
         this.patientId = patientId;
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         loadMedicalRecords(null); // အစမှာ filter မလုပ်ဘဲ record အားလုံးပြမယ်
     }
     

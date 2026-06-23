@@ -17,6 +17,7 @@ public class NurseDashboardGUI extends javax.swing.JFrame {
      */
     public NurseDashboardGUI() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
     }
 
     /**

@@ -18,6 +18,7 @@ public class SystemDashboardGUI extends javax.swing.JFrame {
      */
     public SystemDashboardGUI() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         java.awt.Font bigBoldFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18);
         jTextField1.setFont(bigBoldFont);
         jTextField2.setFont(bigBoldFont);
@@ -331,13 +332,15 @@ public class SystemDashboardGUI extends javax.swing.JFrame {
             String[] lines = clinicmanagementsystem.util.FileManager.readLines("src/clinicmanagementsystem/data/payments.txt");
             for (String line : lines) {
                 if (line.trim().isEmpty()) continue;
-                String[] parts = line.split(",");
-                if (parts.length > 5) {
-                    double amount = Double.parseDouble(parts[2].trim());
-                    String status = parts[5].trim();
-                    if (status.equalsIgnoreCase("Paid")) {
-                        totalRevenue += amount;
-                    }
+                String[] parts = line.split(",", -1);
+                if (parts.length >= 8) {
+                    try {
+                        double amount = Double.parseDouble(parts[5].trim());
+                        String status = parts[7].trim();
+                        if (status.equalsIgnoreCase("Paid")) {
+                            totalRevenue += amount;
+                        }
+                    } catch (NumberFormatException ignored) {}
                 }
             }
         } catch (Exception e) {

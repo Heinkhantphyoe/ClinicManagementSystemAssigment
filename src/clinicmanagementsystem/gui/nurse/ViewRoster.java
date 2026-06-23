@@ -21,6 +21,7 @@ public class ViewRoster extends javax.swing.JFrame {
 
     public ViewRoster() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         loadRoster(null);
     }
 

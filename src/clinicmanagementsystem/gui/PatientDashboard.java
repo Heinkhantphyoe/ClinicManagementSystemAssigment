@@ -23,6 +23,7 @@ public class PatientDashboard extends javax.swing.JFrame {
      */
     public PatientDashboard() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
     }
 
     public PatientDashboard(String patientName) {

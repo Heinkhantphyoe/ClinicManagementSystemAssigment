@@ -17,9 +17,13 @@ public class ManageStaffRoster extends javax.swing.JFrame {
         model.setColumnIdentifiers(columnList);
         loadDataToTable("src/clinicmanagementsystem/data/rosters.txt");
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         loadUserIDs();
         if (jTextField1 != null) {
-            jTextField1.setText("2026-06-18");
+            jTextField1.setText(java.time.LocalDate.now().toString());
+        }
+        if (jTextField2 != null) {
+            jTextField2.setText(java.time.LocalDate.now().toString());
         }
         if (checkBtn != null) {
             checkBtn.addActionListener(e -> updateStatusLabels());
@@ -236,13 +240,13 @@ public class ManageStaffRoster extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(71, 71, 71)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(deleteButton)
-                            .addComponent(addButton))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(29, 29, 29)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(updateButton)
-                            .addComponent(clearButton)))
+                            .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)

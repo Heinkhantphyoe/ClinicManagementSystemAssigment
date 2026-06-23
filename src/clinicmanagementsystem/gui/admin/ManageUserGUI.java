@@ -18,6 +18,7 @@ public class ManageUserGUI extends javax.swing.JFrame {
         model.setColumnIdentifiers(columnList);
         loadDataToTable("src/clinicmanagementsystem/data/users.txt");
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
     }
 
     public void loadDataToTable(String fileName) {

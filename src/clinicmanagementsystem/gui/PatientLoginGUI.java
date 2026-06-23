@@ -17,6 +17,7 @@ public class PatientLoginGUI extends javax.swing.JFrame {
      */
     public PatientLoginGUI() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         
         // Return to LoginGUI if user closes the window
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);

@@ -18,6 +18,7 @@ public class AssignDoctorAndNurseGUI extends javax.swing.JFrame {
      */
     public AssignDoctorAndNurseGUI() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         txtPatientID.setEditable(false);
         txtDate.setEditable(false);
         txtTime.setEditable(false);

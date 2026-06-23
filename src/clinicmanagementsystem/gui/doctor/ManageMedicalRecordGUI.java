@@ -29,6 +29,7 @@ public class ManageMedicalRecordGUI extends javax.swing.JFrame {
     public ManageMedicalRecordGUI() {
         model.setColumnIdentifiers(columnName);
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         setupSearchPlaceholder();
         addMedicalRecordIntoTable();
         setMinimumSize(getSize());

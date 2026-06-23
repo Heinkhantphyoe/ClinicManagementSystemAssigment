@@ -23,6 +23,7 @@ public class DoctorDashboardGUI extends javax.swing.JFrame {
      */
     public DoctorDashboardGUI() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         setupExitAndLogout();
     }
 

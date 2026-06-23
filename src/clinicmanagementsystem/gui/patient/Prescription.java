@@ -22,6 +22,7 @@ public class Prescription extends javax.swing.JDialog {
         super(parent, modal);
         this.patientId = patientId;
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         loadPrescriptions(null);
     }
 

@@ -24,6 +24,7 @@ public class ViewAssignedAppointments extends javax.swing.JFrame {
 
     public ViewAssignedAppointments() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         loadAppts(null);
     }
 

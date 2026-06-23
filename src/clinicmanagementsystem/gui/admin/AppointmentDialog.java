@@ -19,6 +19,7 @@ public class AppointmentDialog extends javax.swing.JDialog {
         this.filterType = filterType;
         model.setColumnIdentifiers(columnList);
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         jLabel1.setText(filterType + " Appointments");
         loadAppointments();
     }

@@ -24,6 +24,7 @@ public class PrescribeMedicationGUI extends javax.swing.JFrame {
      */
     public PrescribeMedicationGUI() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         setMinimumSize(getSize());
     }
 

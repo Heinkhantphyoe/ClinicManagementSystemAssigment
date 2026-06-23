@@ -25,6 +25,7 @@ public class UpdateAppointmentStatus extends javax.swing.JFrame {
      */
     public UpdateAppointmentStatus() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(STATUS_OPTIONS));
         
         txtApptId.setText("Enter Appt ID...");

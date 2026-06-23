@@ -24,6 +24,7 @@ public class PatientDialog extends javax.swing.JDialog {
         super(parent, modal);
         model.setColumnIdentifiers(columnList);
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         jLabel1.setText("View All Patients");
         loadPatients();
     }

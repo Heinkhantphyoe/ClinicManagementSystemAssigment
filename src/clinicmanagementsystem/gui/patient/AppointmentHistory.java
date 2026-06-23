@@ -21,6 +21,7 @@ public class AppointmentHistory extends javax.swing.JDialog {
         super(parent, modal);
         this.currentPatientId = patientId;
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
         loadAppointmentHistory();
     }

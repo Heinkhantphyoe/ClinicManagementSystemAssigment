@@ -27,6 +27,7 @@ public class MyRosterGUI extends javax.swing.JFrame {
     public MyRosterGUI() {
         model.setColumnIdentifiers(columnName);
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         
         // Add action listener here so NetBeans doesn't erase it
         searchBtn.addActionListener(this::searchBtnActionPerformed);

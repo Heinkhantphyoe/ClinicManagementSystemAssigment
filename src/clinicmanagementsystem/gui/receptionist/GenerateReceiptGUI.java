@@ -24,6 +24,7 @@ public class GenerateReceiptGUI extends javax.swing.JFrame {
      */
     public GenerateReceiptGUI() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         txtReceipt.setEditable(false);
         model.setColumnIdentifiers(columnList);
         jTable1.setModel(model);

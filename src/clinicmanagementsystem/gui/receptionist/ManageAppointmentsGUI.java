@@ -24,6 +24,7 @@ public class ManageAppointmentsGUI extends javax.swing.JFrame {
      */
     public ManageAppointmentsGUI() {
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         loadAppointments();
     }
 

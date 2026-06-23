@@ -29,6 +29,7 @@ public class ManagePatientsGUI extends javax.swing.JFrame {
     public ManagePatientsGUI() {
 
         initComponents();
+        clinicmanagementsystem.util.UIUtils.styleButtons(this);
         loadPatients();
     }
 
