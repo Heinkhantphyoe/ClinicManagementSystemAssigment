@@ -211,9 +211,11 @@ public class LoginGUI extends javax.swing.JFrame {
                 continue;
             }
 
-            String[] parts = line.split(",");
+            String[] parts = line.split(",", -1);
             if (parts.length < 8) {
-                continue;
+                String[] padded = new String[8];
+                for(int j=0; j<8; j++) padded[j] = (j < parts.length) ? parts[j] : "";
+                parts = padded;
             }
 
             users[i] = new User(

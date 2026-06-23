@@ -286,14 +286,14 @@ public class ManageUserGUI extends javax.swing.JFrame {
     private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
         row = jTable1.getSelectedRow();
 
-        String id = model.getValueAt(row, 0).toString();
-        String name = model.getValueAt(row, 1).toString();
-        String gender = model.getValueAt(row, 2).toString();
-        String phone = model.getValueAt(row, 3).toString();
-        String email = model.getValueAt(row, 4).toString();
-        String username = model.getValueAt(row, 5).toString();
-        String password = model.getValueAt(row, 6).toString();
-        String role = model.getValueAt(row, 7).toString();
+        String id = model.getValueAt(row, 0) != null ? model.getValueAt(row, 0).toString() : "";
+        String name = model.getValueAt(row, 1) != null ? model.getValueAt(row, 1).toString() : "";
+        String gender = model.getValueAt(row, 2) != null ? model.getValueAt(row, 2).toString() : "";
+        String phone = model.getValueAt(row, 3) != null ? model.getValueAt(row, 3).toString() : "";
+        String email = model.getValueAt(row, 4) != null ? model.getValueAt(row, 4).toString() : "";
+        String username = model.getValueAt(row, 5) != null ? model.getValueAt(row, 5).toString() : "";
+        String password = model.getValueAt(row, 6) != null ? model.getValueAt(row, 6).toString() : "";
+        String role = model.getValueAt(row, 7) != null ? model.getValueAt(row, 7).toString() : "";
 
         jTextField4.setText(id);
         jTextField1.setText(name);
@@ -326,7 +326,12 @@ public class ManageUserGUI extends javax.swing.JFrame {
             boolean found = false;
 
             for (String line : lines) {
-                String[] parts = line.split(",");
+                String[] parts = line.split(",", -1);
+                if (parts.length < 8) {
+                    String[] padded = new String[8];
+                    for (int i = 0; i < 8; i++) padded[i] = (i < parts.length) ? parts[i] : "";
+                    parts = padded;
+                }
                 // parts[0] contains the User ID
                 if (parts[0].equalsIgnoreCase(searchId)) {
                     model.addRow(parts);

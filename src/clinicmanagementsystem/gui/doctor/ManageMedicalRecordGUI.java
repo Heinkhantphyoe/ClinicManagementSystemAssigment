@@ -71,9 +71,11 @@ public class ManageMedicalRecordGUI extends javax.swing.JFrame {
                 if (line == null || line.isEmpty()) {
                     continue;
                 }
-                String[] fields = line.split(",");
+                String[] fields = line.split(",", -1);
                 if (fields.length < columnName.length) {
-                    continue;
+                    String[] padded = new String[columnName.length];
+                    for (int i = 0; i < columnName.length; i++) padded[i] = (i < fields.length) ? fields[i] : "";
+                    fields = padded;
                 }
                 model.addRow(fields); 
             }
@@ -104,9 +106,11 @@ public class ManageMedicalRecordGUI extends javax.swing.JFrame {
                 if (line == null || line.isEmpty()) {
                     continue;
                 }
-                String[] fields = line.split(",");
+                String[] fields = line.split(",", -1);
                 if (fields.length < columnName.length) {
-                    continue;
+                    String[] padded = new String[columnName.length];
+                    for (int j = 0; j < columnName.length; j++) padded[j] = (j < fields.length) ? fields[j] : "";
+                    fields = padded;
                 }
               String database_recordId = fields[0];
               if(database_recordId.equals(id)){
@@ -351,13 +355,13 @@ public class ManageMedicalRecordGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         row = jTable1.getSelectedRow();
         if (row > -1) {
-            String recordId = String.valueOf(model.getValueAt(row , 0));
-            String patientId = String.valueOf(model.getValueAt(row, 1));
-            String recordIdBy = String.valueOf(model.getValueAt(row,2));
-            String diagnosis = String.valueOf(model.getValueAt(row, 3));
-            String treatment = String.valueOf(model.getValueAt(row , 4));
-            String notes = String.valueOf(model.getValueAt(row, 5));
-            String date = String.valueOf(model.getValueAt(row, 6));
+            String recordId = model.getValueAt(row, 0) != null ? model.getValueAt(row, 0).toString() : "";
+            String patientId = model.getValueAt(row, 1) != null ? model.getValueAt(row, 1).toString() : "";
+            String recordIdBy = model.getValueAt(row, 2) != null ? model.getValueAt(row, 2).toString() : "";
+            String diagnosis = model.getValueAt(row, 3) != null ? model.getValueAt(row, 3).toString() : "";
+            String treatment = model.getValueAt(row, 4) != null ? model.getValueAt(row, 4).toString() : "";
+            String notes = model.getValueAt(row, 5) != null ? model.getValueAt(row, 5).toString() : "";
+            String date = model.getValueAt(row, 6) != null ? model.getValueAt(row, 6).toString() : "";
 
             jTextField1.setText(recordId);
             jTextField3.setText(patientId);
@@ -437,9 +441,11 @@ public class ManageMedicalRecordGUI extends javax.swing.JFrame {
                if (line == null || line.isEmpty()) {
                    continue;
                }
-               String[] fields = line.split(",");
+               String[] fields = line.split(",", -1);
                if (fields.length < columnName.length) {
-                   continue;
+                    String[] padded = new String[columnName.length];
+                    for (int j = 0; j < columnName.length; j++) padded[j] = (j < fields.length) ? fields[j] : "";
+                    fields = padded;
                }
                String database_patientId = fields[1];
                if(database_patientId.equalsIgnoreCase(searchKeyWord)){

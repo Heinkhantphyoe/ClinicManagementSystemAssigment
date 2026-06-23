@@ -158,8 +158,12 @@ public class PatientLoginGUI extends javax.swing.JFrame {
             String[] lines = clinicmanagementsystem.util.FileManager.readLines("src/clinicmanagementsystem/data/patients.txt");
             for (String line : lines) {
                 if (line == null || line.trim().isEmpty()) continue;
-                String[] parts = line.split(",");
-                if (parts.length < 9) continue;
+                String[] parts = line.split(",", -1);
+                if (parts.length < 10) {
+                    String[] padded = new String[10];
+                    for(int i=0; i<10; i++) padded[i] = (i < parts.length) ? parts[i] : "";
+                    parts = padded;
+                }
 
                 String patientId = parts[0].trim();
                 String name      = parts[1].trim();

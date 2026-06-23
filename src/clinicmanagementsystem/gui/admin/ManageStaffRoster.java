@@ -67,7 +67,12 @@ public class ManageStaffRoster extends javax.swing.JFrame {
         try {
             String[] lines = clinicmanagementsystem.util.FileManager.readLines("src/clinicmanagementsystem/data/users.txt");
             for (String line : lines) {
-                String[] parts = line.split(",");
+                String[] parts = line.split(",", -1);
+                if (parts.length < 8) {
+                    String[] padded = new String[8];
+                    for (int i = 0; i < 8; i++) padded[i] = (i < parts.length) ? parts[i] : "";
+                    parts = padded;
+                }
                 if (parts.length > 0) {
                     jComboBox1.addItem(parts[0]);
                 }
@@ -98,7 +103,12 @@ public class ManageStaffRoster extends javax.swing.JFrame {
         try {
             String[] lines = clinicmanagementsystem.util.FileManager.readLines("src/clinicmanagementsystem/data/users.txt");
             for (String line : lines) {
-                String[] parts = line.split(",");
+                String[] parts = line.split(",", -1);
+                if (parts.length < 8) {
+                    String[] padded = new String[8];
+                    for (int i = 0; i < 8; i++) padded[i] = (i < parts.length) ? parts[i] : "";
+                    parts = padded;
+                }
                 if (parts[0].equals(staffId)) {
                     // return name and role (index 1 is Name, index 7 is Role in users.txt)
                     return new String[]{parts[1], parts[7]};
@@ -548,7 +558,12 @@ public class ManageStaffRoster extends javax.swing.JFrame {
             boolean found = false;
 
             for (String line : lines) {
-                String[] parts = line.split(",");
+                String[] parts = line.split(",", -1);
+                if (parts.length < 6) {
+                    String[] padded = new String[6];
+                    for (int i = 0; i < 6; i++) padded[i] = (i < parts.length) ? parts[i] : "";
+                    parts = padded;
+                }
                 // parts[1] contains the Staff ID/User ID
                 if (parts[1].equalsIgnoreCase(searchId)) {
                     model.addRow(parts);
@@ -569,14 +584,14 @@ public class ManageStaffRoster extends javax.swing.JFrame {
 
     private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
         row = jTable1.getSelectedRow();
-        jComboBox1.setSelectedItem(model.getValueAt(row, 1).toString());
+        jComboBox1.setSelectedItem(model.getValueAt(row, 1) != null ? model.getValueAt(row, 1).toString() : "");
         if (model.getValueAt(row, 3) != null) {
             RoleTextField.setText(model.getValueAt(row, 3).toString());
         } else {
             RoleTextField.setText("");
         }
-        jTextField2.setText(model.getValueAt(row, 4).toString());
-        jComboBox2.setSelectedItem(model.getValueAt(row, 5).toString());
+        jTextField2.setText(model.getValueAt(row, 4) != null ? model.getValueAt(row, 4).toString() : "");
+        jComboBox2.setSelectedItem(model.getValueAt(row, 5) != null ? model.getValueAt(row, 5).toString() : "");
     }//GEN-LAST:event_jTable1MouseReleased
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed

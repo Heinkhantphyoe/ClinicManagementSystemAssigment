@@ -56,7 +56,8 @@ public class RecordPatientVitals extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = tblVitals.getSelectedRow();
                 if (row >= 0) {
-                    String vitalsId = tblVitals.getValueAt(row, 0).toString();
+                    Object idObj = tblVitals.getValueAt(row, 0);
+                    String vitalsId = idObj != null ? idObj.toString() : "";
                     txtVitalsId.setText(vitalsId);
                     
                     Object patientObj = tblVitals.getValueAt(row, 1);
@@ -100,6 +101,11 @@ public class RecordPatientVitals extends javax.swing.JFrame {
             for (String line : lines) {
                 if (line == null) continue;
                 String[] p = line.split(",", -1);
+                if (p.length < 8) {
+                    String[] padded = new String[8];
+                    for (int i = 0; i < 8; i++) padded[i] = (i < p.length) ? p[i] : "";
+                    p = padded;
+                }
                 if (p.length < 6) continue;            // skip blank/bad rows
                 if (patientId == null || patientId.isEmpty() || p[1].equalsIgnoreCase(patientId)) {
                     String weight = p.length > 5 ? p[5] : "";
@@ -422,9 +428,14 @@ public class RecordPatientVitals extends javax.swing.JFrame {
        try {
            String[] lines = FileManager.readLines(VITALS_FILE);
            boolean found = false;
-           for (int i = 0; i < lines.length; i++) {
+            for (int i = 0; i < lines.length; i++) {
                if (lines[i] == null) continue;
-               String[] p = lines[i].split(",");
+               String[] p = lines[i].split(",", -1);
+               if (p.length < 8) {
+                    String[] padded = new String[8];
+                    for(int j=0; j<8; j++) padded[j] = (j < p.length) ? p[j] : "";
+                    p = padded;
+               }
                if (p.length >= 1 && p[0].equalsIgnoreCase(id)) {
                    lines[i] = formToLine();
                    found = true;
