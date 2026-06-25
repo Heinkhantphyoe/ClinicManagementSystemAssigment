@@ -48,9 +48,8 @@ public class Prescription extends javax.swing.JDialog {
                 if (line.trim().isEmpty()) continue;
  
                 String[] parts = line.split(",");
-                if (parts.length < 9) continue; // column 9 ခု မပြည့်ရင် ဒီ line ကျော်မယ်
+                if (parts.length < 9) continue; // skip that line if not 9 column
  
-                // prescriptions.txt ရဲ့ column အစီအစဉ်:
                 // PrescID, PatientID, Doctor, Medicine, Dosage, Frequency, Duration, Instructions, Date
                 String prescId        = parts[0].trim(); // RX001
                 String filePatientId  = parts[1].trim(); // P001
@@ -62,12 +61,12 @@ public class Prescription extends javax.swing.JDialog {
                 String instructions   = parts[7].trim();
                 String prescDate      = parts[8].trim();
  
-                // Login လုပ်ထားတဲ့ patient ရဲ့ data ပဲထည့်မယ်
+                // add logined patient data
                 if (filePatientId.equals(patientId) == false) {
                     continue;
                 }
  
-                // date filter ထည့်ထားရင် ဒီ date ပါမှ ထည့်မယ်
+                // date filter
                 if (searchDate.isEmpty() == false) {
                     if (prescDate.contains(searchDate) == false) {
                         continue;
@@ -79,7 +78,7 @@ public class Prescription extends javax.swing.JDialog {
             }
             br.close();
  
-            // filter ထည့်ပြီးမှ data မတွေ့ရင် message ပြမယ်
+            // show message if not found data
             if (searchDate.isEmpty() == false && model.getRowCount() == 0) {
                 javax.swing.JOptionPane.showMessageDialog(this,
                     "No prescriptions found for date: " + searchDate);
