@@ -1,7 +1,15 @@
 userId,name,gender,phone,email,username,password,role
-U001,Admin User,Male,123333,admin@clinic.com,admin,admin,Admin
-U002,Doctor User,Female,0123456790,doctor@clinic.com,doctor,doctor123,Doctor
-U003,Felix,Male,0123456790,felix@clinic.com,felix,felix123,Doctor
-U004,Nurse User,Female,0123456791,nurse@clinic.com,nurse,nurse123,Nurse
-U005,Angelina,Female,0123456791,angel@clinic.com,angel,angel123,Nurse
-U006,Receptionist User,Male,0123456792,reception@clinic.com,reception,reception123,Receptionist
+U001,Admin User,Male,1001,admin@clinic.com,admin,admin,Admin
+U002,Doc Alpha,Male,1002,alpha@clinic.com,alpha,password,Doctor
+U003,Doc Beta,Female,1003,beta@clinic.com,beta,password,Doctor
+U004,Doc Gamma,Male,1004,gamma@clinic.com,gamma,password,Doctor
+U005,Doc Delta,Female,1005,delta@clinic.com,delta,password,Doctor
+U006,Doc Epsilon,Male,1006,epsilon@clinic.com,epsilon,password,Doctor
+U007,Nurse Zeta,Female,1007,zeta@clinic.com,zeta,password,Nurse
+U008,Nurse Eta,Male,1008,eta@clinic.com,eta,password,Nurse
+U009,Nurse Theta,Female,1009,theta@clinic.com,theta,password,Nurse
+U010,Nurse Iota,Male,1010,iota@clinic.com,iota,password,Nurse
+U011,Nurse Kappa,Female,1011,kappa@clinic.com,kappa,password,Nurse
+U012,Rec Lambda,Male,1012,lambda@clinic.com,lambda,password,Receptionist
+U013,Rec Mu,Female,1013,mu@clinic.com,mu,password,Receptionist
+U014,zack,Female,112589322,zack@clinic.com,Zackk,password,Nurse

@@ -4,23 +4,22 @@ package clinicmanagementsystem.gui.patient;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-
 /**
  *
  * @author DELL
  */
-
 public class BookAppointment extends javax.swing.JDialog {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BookAppointment.class.getName());
 
     private String currentPatientId;
     private javax.swing.table.DefaultTableModel model;
+
     /**
      * Creates new form BookAppointment
      */
     public BookAppointment(java.awt.Frame parent, boolean modal, String patientId,
-                       javax.swing.table.DefaultTableModel model) {
+            javax.swing.table.DefaultTableModel model) {
         super(parent, modal);
         this.currentPatientId = patientId;
         this.model = model;
@@ -195,50 +194,50 @@ public class BookAppointment extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Step 1: field တွေဖတ်တယ်
-    // field တွေကနေ data ဖတ်တယ်
+        // Step 1: read the field
+        // readign data from field
         String patientId = currentPatientId;
-        String date      = jTextField2.getText().trim();
-        String time      = timeTextField.getText().trim();
-        String type      = jComboBox1.getSelectedItem().toString();
-        String reason    = jTextField5.getText().trim();
-        String status    = "Pending"; // patient က status မပြောင်းနိုင်
+        String date = jTextField2.getText().trim();
+        String time = timeTextField.getText().trim();
+        String type = jComboBox1.getSelectedItem().toString();
+        String reason = jTextField5.getText().trim();
+        String status = "Pending"; // patient cannot change status
 
-        // date, time နဲ့ reason blank ဖြစ်ရင် warning ပြတယ်
+        // show warning if date, time and reason is empty
         if (date.isEmpty() || time.isEmpty() || reason.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                "Please fill in Date, Time, and Reasons!",
-                "Missing Information",
-                javax.swing.JOptionPane.WARNING_MESSAGE);
+                    "Please fill in Date, Time, and Reasons!",
+                    "Missing Information",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // date format မှားရင် warning ပြတယ်
+        // show warning if date format is wrong
         if (!date.matches("\\d{4}-\\d{2}-\\d{2}")) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                "Wrong date format!\nPlease enter as YYYY-MM-DD",
-                "Wrong Format",
-                javax.swing.JOptionPane.WARNING_MESSAGE);
+                    "Wrong date format!\nPlease enter as YYYY-MM-DD",
+                    "Wrong Format",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
             jTextField2.setText("");
             jTextField2.requestFocus();
             return;
         }
-        
-        // time format မှားရင် warning ပြတယ်
+
+        // time format warning
         if (!time.matches("^([01]?\\d|2[0-3]):[0-5]\\d$")) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                "Wrong time format!\nPlease enter as HH:MM",
-                "Wrong Format",
-                javax.swing.JOptionPane.WARNING_MESSAGE);
+                    "Wrong time format!\nPlease enter as HH:MM",
+                    "Wrong Format",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
             timeTextField.setText("");
             timeTextField.requestFocus();
             return;
         }
 
-        // A001, A002 စသဖြင့် auto ID ထုတ်တယ်
+        // generate auto ID
         String apptId = generateAppointmentId();
 
-        // History table ထဲ ချက်ချင်းထည့်တယ် (model null မဟုတ်ရင်)
+        // adding into History table if model is not null
         if (model != null) {
             model.addRow(new String[]{apptId, patientId, date, time, "", type, reason, status});
         }
@@ -246,24 +245,24 @@ public class BookAppointment extends javax.swing.JDialog {
         // format: apptId,patientId,doctorId,nurseId,date,time,type,status,reason
         String line = apptId + "," + patientId + ",N/A,N/A," + date + "," + time + "," + type + "," + status + "," + reason;
 
-        // file ထဲ save တယ်
+        // save into file
         try {
             java.io.FileWriter fw = new java.io.FileWriter(
-                "src/clinicmanagementsystem/data/appointments.txt", true);
+                    "src/clinicmanagementsystem/data/appointments.txt", true);
             fw.write(line + "\n");
             fw.close();
 
             javax.swing.JOptionPane.showMessageDialog(this,
-                "Appointment booked!\nStatus: Pending\n\nPlease wait for staff approval.",
-                "Success",
-                javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            clearAllFields(); // save ပြီးရင် field တွေ ရှင်းတယ်
+                    "Appointment booked!\nStatus: Pending\n\nPlease wait for staff approval.",
+                    "Success",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            clearAllFields(); // cleare field after save
 
         } catch (java.io.IOException e) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                "Error saving: " + e.getMessage(),
-                "Error",
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                    "Error saving: " + e.getMessage(),
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -278,44 +277,45 @@ public class BookAppointment extends javax.swing.JDialog {
 
     private void clearAllFields() {
 
-    // Patient ID မဖျက်ဘူး
-    jTextField2.setText(""); // Date
-    timeTextField.setText(""); // Time
-    jTextField5.setText(""); // Reason
+        // Patient ID is not delete
+        jTextField2.setText(""); // Date
+        timeTextField.setText(""); // Time
+        jTextField5.setText(""); // Reason
 
-    // ComboBox ကို ပထမ item ပြန်ထား
-    jComboBox1.setSelectedIndex(0);
+        // set ComboBox to first item
+        jComboBox1.setSelectedIndex(0);
 
-    // Cursor ကို Date field ဆီပို့
-    jTextField2.requestFocus();
-}
-    private String generateAppointmentId() {
-    int lastNumber = 0;
-
-    try (java.io.BufferedReader br =
-         new java.io.BufferedReader(new java.io.FileReader(
-             "src/clinicmanagementsystem/data/appointments.txt"))) {
-
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split(",");
-            if (parts.length >= 1 && parts[0].startsWith("A")) {
-                try {
-                    int num = Integer.parseInt(parts[0].substring(1));
-                    if (num > lastNumber) {
-                        lastNumber = num;
-                    }
-                } catch (NumberFormatException e) {
-                    // skip
-                }
-            }
-        }
-    } catch (java.io.IOException e) {
-        // file မရှိသေးရင် 0 ကနေစ
+        // send cursor to date field
+        jTextField2.requestFocus();
     }
 
-    return String.format("A%03d", lastNumber + 1);
-}
+    private String generateAppointmentId() {
+        int lastNumber = 0;
+
+        try (java.io.BufferedReader br
+                = new java.io.BufferedReader(new java.io.FileReader(
+                        "src/clinicmanagementsystem/data/appointments.txt"))) {
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 1 && parts[0].startsWith("A")) {
+                    try {
+                        int num = Integer.parseInt(parts[0].substring(1));
+                        if (num > lastNumber) {
+                            lastNumber = num;
+                        }
+                    } catch (NumberFormatException e) {
+                        // skip
+                    }
+                }
+            }
+        } catch (java.io.IOException e) {
+            // start form 0 if no field
+        }
+
+        return String.format("A%03d", lastNumber + 1);
+    }
 
     /**
      * @param args the command line arguments
@@ -373,4 +373,3 @@ public class BookAppointment extends javax.swing.JDialog {
     private javax.swing.JTextField timeTextField;
     // End of variables declaration//GEN-END:variables
 }
-

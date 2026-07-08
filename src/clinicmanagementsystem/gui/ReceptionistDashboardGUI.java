@@ -117,7 +117,10 @@ public class ReceptionistDashboardGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Are you sure you want to exit the application?", "Exit Confirmation", javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE);
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void manageAppointmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageAppointmentBtnActionPerformed
@@ -145,7 +148,13 @@ public class ReceptionistDashboardGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_collectPaymetBtnActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout Confirmation", javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE);
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            clinicmanagementsystem.util.SessionManager.logout();
+            LoginGUI loginGUI = new LoginGUI();
+            loginGUI.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void generateReceiptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateReceiptBtnActionPerformed

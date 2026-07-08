@@ -2,9 +2,9 @@
 Payment ID: PAY001
 Appointment ID: A001
 Patient ID: P001
-Patient Name: Patient User
-Date: 2026-05-20
+Patient Name: Pat One
+Date: 2026-05-01
 Amount: RM 100.0
-Payment Method: Card
+Payment Method: Cash
 Payment Status: Paid
 ===========================================

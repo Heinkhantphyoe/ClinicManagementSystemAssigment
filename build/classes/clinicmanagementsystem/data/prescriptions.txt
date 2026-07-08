@@ -1,4 +1,17 @@
 prescriptionId,patientId,doctorId,medication,dosage,frequency,duration,instructions,date
-PR001,P001,U002,Paracetamol,500mg,3 times a day,5 days,Take after meals,2026-06-15
-PR002,P002,U002,Amoxicillin,250mg,3 times a day,5 days,Take three times a day for 5 days,2026-06-16
-PR004,P002,U002,para,100ml,2 times a day,5 days,take after meal,2026-06-23
+PR001,P001,U002,Paracetamol,500mg,3 times a day,5 days,After meals,2026-06-01
+PR002,P002,U003,Cough Syrup,10ml,2 times a day,7 days,Before bed,2026-06-02
+PR003,P003,U004,Aspirin,250mg,1 time a day,10 days,With food,2026-06-03
+PR004,P004,U005,Antihistamine,10mg,1 time a day,5 days,Morning,2026-06-04
+PR005,P005,U006,Tamiflu,75mg,2 times a day,5 days,After meals,2026-06-05
+PR006,P006,U002,Painkiller,400mg,2 times a day,3 days,When needed,2026-06-10
+PR007,P007,U003,Lozenges,1pc,4 times a day,5 days,Dissolve slowly,2026-06-11
+PR008,P008,U004,Antacid,20ml,3 times a day,7 days,After meals,2026-06-12
+PR009,P009,U005,Cream,5g,2 times a day,7 days,Apply gently,2026-06-13
+PR010,P010,U006,Antibiotic,500mg,3 times a day,7 days,Complete course,2026-06-14
+PR011,P011,U002,Vitamins,1 tab,1 time a day,30 days,Morning,2026-06-20
+PR012,P012,U003,Ointment,10g,2 times a day,14 days,External use,2026-06-21
+PR013,P013,U004,Ibuprofen,400mg,2 times a day,5 days,After meals,2026-06-22
+PR014,P014,U005,Lisinopril,10mg,1 time a day,30 days,Morning,2026-06-23
+PR015,P015,U006,Metformin,500mg,2 times a day,30 days,With meals,2026-06-24
+PR016,P0155,U004,para,100ml,4 times a day,2 days only,take after your meal,2026-06-26

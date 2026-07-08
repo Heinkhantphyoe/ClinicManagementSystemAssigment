@@ -33,6 +33,12 @@ public class ManageMedicalRecordGUI extends javax.swing.JFrame {
         setupSearchPlaceholder();
         addMedicalRecordIntoTable();
         setMinimumSize(getSize());
+        
+        jTextField4.setEditable(false);
+        
+        if (clinicmanagementsystem.util.SessionManager.getCurrentUserId() != null) {
+            jTextField4.setText(clinicmanagementsystem.util.SessionManager.getCurrentUserId());
+        }
     }
 
     private void setupSearchPlaceholder() {
@@ -87,15 +93,19 @@ public class ManageMedicalRecordGUI extends javax.swing.JFrame {
     }
     
     private void clearField(){
-        if(row >-1){
-            jTextField1.setText("");
-            jTextField3.setText("");
+        jTextField1.setText("");
+        jTextField3.setText("");
+        if (clinicmanagementsystem.util.SessionManager.getCurrentUserId() != null) {
+            jTextField4.setText(clinicmanagementsystem.util.SessionManager.getCurrentUserId());
+        } else {
             jTextField4.setText("");
-            jTextField5.setText("");
-            jTextField6.setText("");
-            jTextField7.setText("");
-            NoteTextField.setText("");
         }
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        NoteTextField.setText("");
+        row = -1;
+        jTable1.clearSelection();
     }
     
     private void fileUpdate(String id){
@@ -358,7 +368,6 @@ public class ManageMedicalRecordGUI extends javax.swing.JFrame {
         if (row > -1) {
             String recordId = model.getValueAt(row, 0) != null ? model.getValueAt(row, 0).toString() : "";
             String patientId = model.getValueAt(row, 1) != null ? model.getValueAt(row, 1).toString() : "";
-            String recordIdBy = model.getValueAt(row, 2) != null ? model.getValueAt(row, 2).toString() : "";
             String diagnosis = model.getValueAt(row, 3) != null ? model.getValueAt(row, 3).toString() : "";
             String treatment = model.getValueAt(row, 4) != null ? model.getValueAt(row, 4).toString() : "";
             String notes = model.getValueAt(row, 5) != null ? model.getValueAt(row, 5).toString() : "";
@@ -366,7 +375,9 @@ public class ManageMedicalRecordGUI extends javax.swing.JFrame {
 
             jTextField1.setText(recordId);
             jTextField3.setText(patientId);
-            jTextField4.setText(recordIdBy);
+            if (clinicmanagementsystem.util.SessionManager.getCurrentUserId() != null) {
+                jTextField4.setText(clinicmanagementsystem.util.SessionManager.getCurrentUserId());
+            }
             jTextField5.setText(diagnosis);
             jTextField6.setText(treatment);
             NoteTextField.setText(notes);
@@ -400,16 +411,25 @@ public class ManageMedicalRecordGUI extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        String newrecordId = jTextField1.getText();
+        String newpatientId = jTextField3.getText();
+        String newrecordedBy = jTextField4.getText();
+        String newdiagosis = jTextField5.getText();
+        String newtreatment = jTextField6.getText();
+        String newNote = NoteTextField.getText();
+        String newdate = jTextField7.getText();
+
+        if (newrecordId.isEmpty() || newpatientId.isEmpty() || newrecordedBy.isEmpty() || newdiagosis.isEmpty() || newtreatment.isEmpty() || newdate.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all required fields!");
+            return;
+        }
+
+        if (!clinicmanagementsystem.util.ValidationUtil.isValidDate(newdate)) {
+            JOptionPane.showMessageDialog(this, "Invalid Date format! Please use YYYY-MM-DD.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if(row > -1 ){
-           
-            String newrecordId = jTextField1.getText();
-            String newpatientId = jTextField3.getText();
-            String newrecordedBy = jTextField4.getText();
-            String newdiagosis = jTextField5.getText();
-            String newtreatment = jTextField6.getText();
-            String newNote = NoteTextField.getText();
-            String newdate = jTextField7.getText();
-            
             model.setValueAt(newrecordId , row , 0);
             model.setValueAt(newpatientId , row , 1);
             model.setValueAt(newrecordedBy , row , 2);
@@ -419,9 +439,31 @@ public class ManageMedicalRecordGUI extends javax.swing.JFrame {
             model.setValueAt(newdate , row , 6);
             
             fileUpdate(newrecordId);
+            JOptionPane.showMessageDialog(this, "Record updated successfully!");
             clearField();
-        }else {
-            JOptionPane.showMessageDialog(this, "You need to select a row to Edit!");
+        } else {
+            // Create new record
+            boolean exists = false;
+            for (int i = 0; i < model.getRowCount(); i++) {
+                if (model.getValueAt(i, 0).toString().equals(newrecordId)) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (exists) {
+                JOptionPane.showMessageDialog(this, "Record ID already exists! Please use a unique ID.");
+                return;
+            }
+            
+            model.addRow(new Object[]{newrecordId, newpatientId, newrecordedBy, newdiagosis, newtreatment, newNote, newdate});
+            String newLine = String.join(",", newrecordId, newpatientId, newrecordedBy, newdiagosis, newtreatment, newNote, newdate);
+            try {
+                FileManager.appendLine("src/clinicmanagementsystem/data/medical_records.txt", newLine);
+                JOptionPane.showMessageDialog(this, "New record created successfully!");
+            } catch (Exception e) {
+                logger.log(java.util.logging.Level.SEVERE, "Failed to append new medical record", e);
+            }
+            clearField();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

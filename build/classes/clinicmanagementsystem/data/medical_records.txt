@@ -1,3 +1,19 @@
 recordId,patientId,doctorId,diagnosis,treatment,notes,date
-MR001,P001,U002,Common Cold,Rest and fluids,to come again,2026-05-20
-MR002,P002,U002,Slight,Paracetamol and rest,to ,2026-05-22
+MR001,P001,U002,Fever,Paracetamol,take a rest,2026-06-01
+MR002,P002,U003,Cough,Syrup,Drink water,2026-06-02
+MR003,P003,U004,Headache,Aspirin,Sleep,2026-06-03
+MR004,P004,U005,Allergy,Antihistamine,Avoid dust,2026-06-04
+MR005,P005,U006,Flu,Tamiflu,Rest,2026-06-05
+MR006,P006,U002,Back Pain,Physio,Exercise,2026-06-10
+MR007,P007,U003,Sore Throat,Lozenges,Warm fluids,2026-06-11
+MR008,P008,U003,Stomach Ache,Antacid,Bland diet,2026-06-12
+MR009,P009,U005,Sprain,Ice pack,Elevate,2026-06-13
+MR010,P010,U006,Infection,Antibiotics,Full course,2026-06-14
+MR011,P011,U002,Fatigue,Vitamins,Better diet,2026-06-20
+MR012,P012,U003,Rash,Ointment,Keep clean,2026-06-21
+MR013,P013,U004,Migraine,Rest in dark,Avoid noise,2026-06-22
+MR014,P014,U005,Hypertension,Lisinopril,Low salt,2026-06-23
+MR015,P001,U003,Headache,Paracetamol,do exercise,2026-06-01
+MR016,P001,U003,Headache,Paracetamol,do exercise,2026-06-01
+MR017,P001,U004,test,test,test,2026-01-15
+MR018,P001,U004,Fever,Ice Pack,take rest ,2026-01-15

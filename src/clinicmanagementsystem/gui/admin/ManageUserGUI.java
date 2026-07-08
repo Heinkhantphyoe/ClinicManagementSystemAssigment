@@ -119,8 +119,6 @@ public class ManageUserGUI extends javax.swing.JFrame {
 
         jButton2.setText("jButton2");
 
-        jTextField2.setText("Search with UserID");
-
         searchBtn.setText("Search");
         searchBtn.addActionListener(this::searchBtnActionPerformed);
 

@@ -382,9 +382,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Search with UserID"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="searchBtn">
       <Properties>

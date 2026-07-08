@@ -143,6 +143,7 @@ public class MyRosterGUI extends javax.swing.JFrame {
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         searchBtn.setText("Search");
+        searchBtn.addActionListener(this::searchBtnActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -203,7 +204,7 @@ public class MyRosterGUI extends javax.swing.JFrame {
         addRosterIntoTable();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         String targetDate = jTextField1.getText().trim();
         if (!targetDate.isEmpty() && !clinicmanagementsystem.util.ValidationUtil.isValidDate(targetDate)) {
             javax.swing.JOptionPane.showMessageDialog(this, 
@@ -213,7 +214,7 @@ public class MyRosterGUI extends javax.swing.JFrame {
             return;
         }
         searchByDate(targetDate);
-    }
+    }//GEN-LAST:event_searchBtnActionPerformed
 
     /**
      * @param args the command line arguments

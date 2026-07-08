@@ -1,0 +1,10 @@
+========== CLINIC PAYMENT RECEIPT ==========
+Payment ID: PAY014
+Appointment ID: A014
+Patient ID: P014
+Patient Name: Pat Fourteen
+Date: 2026-06-23
+Amount: RM 150.0
+Payment Method: Credit Card
+Payment Status: Paid
+===========================================

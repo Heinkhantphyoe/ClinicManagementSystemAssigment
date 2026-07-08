@@ -22,7 +22,7 @@ public class MedicalRecords extends javax.swing.JDialog {
         this.patientId = patientId;
         initComponents();
         clinicmanagementsystem.util.UIUtils.styleButtons(this);
-        loadMedicalRecords(null); // အစမှာ filter မလုပ်ဘဲ record အားလုံးပြမယ်
+        loadMedicalRecords(null); // show all withour filte at initial
     }
     
 private void loadMedicalRecords(String dateFilter) {
@@ -58,7 +58,7 @@ private void loadMedicalRecords(String dateFilter) {
             String recordDate    = parts[6].trim();
             
 
-            // Login လုပ်ထားတဲ့ patient ရဲ့ data ပဲထည့်မယ်
+            // show logined patiend data
             if (filePatientId.equals(patientId) == false) {
                 continue;
             }

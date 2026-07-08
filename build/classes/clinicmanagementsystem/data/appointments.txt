@@ -1,7 +1,22 @@
 apptId,patientId,doctorId,nurseId,date,time,appointType,status,notes
-A001,P001,U002,U003,2026-06-10,10:00,General Checkup,Completed,Routine checkup
-A002,P002,U002,U003,2026-06-11,11:30,Follow-up,Scheduled,Follow-up visit
-A003,P001,U002,N/A,2026-06-12,09:00,General Checkup,Completed,First consultation
-A004,P002,U002,N/A,2026-06-13,14:00,General Checkup,Cancelled,Rescheduled by patient
-A005,P001,U002,N/A,2026-06-19,10:00,General Checkup,Scheduled,Today checkup
-A008,P002,U003,U005,2026-06-24,12:00,Specialist Consultation,Pending,medical checkup
+A001,P001,U002,U007,2026-06-01,09:00,General Checkup,Completed,Routine
+A002,P002,U003,U008,2026-06-02,10:00,Follow-up,Completed,Followup
+A003,P003,U004,U009,2026-06-03,11:00,Specialist Consultation,Completed,Consult
+A004,P004,U005,U010,2026-06-04,14:00,General Checkup,Completed,Routine
+A005,P005,U006,U011,2026-06-05,15:00,Follow-up,Completed,Followup
+A006,P006,U002,N/A,2026-06-10,09:30,Specialist Consultation,Scheduled,Consult
+A007,P007,U003,N/A,2026-06-11,10:30,General Checkup,Scheduled,Routine
+A008,P008,U004,N/A,2026-06-12,11:30,Follow-up,Scheduled,Followup
+A009,P009,U005,N/A,2026-06-13,14:30,Specialist Consultation,Scheduled,Consult
+A010,P010,U006,N/A,2026-06-14,15:30,General Checkup,Scheduled,Routine
+A011,P011,U002,U007,2026-06-20,09:00,Follow-up,Cancelled,Patient busy
+A012,P012,U003,U008,2026-06-21,10:00,Specialist Consultation,Cancelled,Sick
+A013,P013,U004,U009,2026-06-22,11:00,General Checkup,Pending,Awaiting confirm
+A014,P014,U005,U010,2026-06-23,14:00,Follow-up,Pending,Awaiting confirm
+A015,P015,U006,U011,2026-06-24,15:00,Specialist Consultation,Pending,Awaiting confirm
+A016,P001,U002,U007,2026-07-04,09:30,General Checkup,Scheduled,Routine
+A017,P002,U003,U007,2026-07-05,14:30,Follow-up,Scheduled,Followup
+A018,P003,U004,U007,2026-07-06,10:00,Specialist Consultation,Pending,Consult
+A019,P004,U005,U007,2026-07-07,15:00,General Checkup,Pending,Routine
+A020,P005,U006,U007,2026-07-08,11:30,Follow-up,Completed,Followup
+A021,P006,U002,U007,2026-07-09,16:00,Specialist Consultation,Cancelled,Cancelled by patient

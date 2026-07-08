@@ -4,16 +4,16 @@ package clinicmanagementsystem.gui.patient;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-
 /**
  *
  * @author DELL
  */
 public class AppointmentHistory extends javax.swing.JDialog {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AppointmentHistory.class.getName());
     private String currentPatientId;
     private javax.swing.table.DefaultTableModel model;
+
     /**
      * Creates new form AppointmentHistory
      */
@@ -25,20 +25,24 @@ public class AppointmentHistory extends javax.swing.JDialog {
         model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
         loadAppointmentHistory();
     }
-   
 
     private String getUserName(String userId) {
-        if (userId.equals("N/A") || userId.isEmpty()) return "N/A";
+        if (userId.equals("N/A") || userId.isEmpty()) {
+            return "N/A";
+        }
         try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("src/clinicmanagementsystem/data/users.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.trim().isEmpty()) continue;
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
                 String[] parts = line.split(",");
                 if (parts[0].equalsIgnoreCase(userId) && parts.length > 1) {
                     return parts[1];
                 }
             }
-        } catch (java.io.IOException e) {}
+        } catch (java.io.IOException e) {
+        }
         return userId; // Fallback to ID if not found
     }
 
@@ -49,21 +53,25 @@ public class AppointmentHistory extends javax.swing.JDialog {
         try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.trim().isEmpty()) continue;
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
                 String[] parts = line.split(",");
-                if (parts.length < 6) continue;
+                if (parts.length < 6) {
+                    continue;
+                }
 
                 // format: apptId[0],patientId[1],doctorId[2],nurseId[3],date[4],time[5],type[6],status[7],reason[8]
                 if (parts[1].trim().equals(currentPatientId)) {
                     model.addRow(new String[]{
-                        parts[0].trim(),                             // Appt ID
-                        parts[4].trim(),                             // Date
-                        parts[5].trim(),                             // Time
-                        getUserName(parts[2].trim()),                // Doctor Name
-                        getUserName(parts[3].trim()),                // Nurse Name
-                        parts.length > 6 ? parts[6].trim() : "",    // Appointment Type
-                        parts.length > 8 ? parts[8].trim() : "",    // Reason
-                        parts.length > 7 ? parts[7].trim() : ""     // Status
+                        parts[0].trim(), // Appt ID
+                        parts[4].trim(), // Date
+                        parts[5].trim(), // Time
+                        getUserName(parts[2].trim()), // Doctor Name
+                        getUserName(parts[3].trim()), // Nurse Name
+                        parts.length > 6 ? parts[6].trim() : "", // Appointment Type
+                        parts.length > 8 ? parts[8].trim() : "", // Reason
+                        parts.length > 7 ? parts[7].trim() : "" // Status
                     });
                 }
             }
@@ -200,54 +208,61 @@ public class AppointmentHistory extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String selectedStatus = jComboBox1.getSelectedItem().toString();
-    model.setRowCount(0);
+        model.setRowCount(0);
 
-    String filePath = "src/clinicmanagementsystem/data/appointments.txt";
+        String filePath = "src/clinicmanagementsystem/data/appointments.txt";
 
-    try (java.io.BufferedReader br =
-         new java.io.BufferedReader(new java.io.FileReader(filePath))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            if (line.trim().isEmpty()) continue;
+        try (java.io.BufferedReader br
+                = new java.io.BufferedReader(new java.io.FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
 
-            String[] parts = line.split(",");
-            if (parts.length < 6) continue;
+                String[] parts = line.split(",");
+                if (parts.length < 6) {
+                    continue;
+                }
 
-            if (!parts[1].trim().equals(currentPatientId)) continue;
+                if (!parts[1].trim().equals(currentPatientId)) {
+                    continue;
+                }
 
-            // format: apptId[0],patientId[1],doctorId[2],nurseId[3],date[4],time[5],type[6],status[7],reason[8]
-            String status = parts.length > 7 ? parts[7].trim() : "";
-            if (selectedStatus.equals("All") || status.equalsIgnoreCase(selectedStatus)) {
-                model.addRow(new String[]{
-                    parts[0].trim(),                             // Appt ID
-                    parts[4].trim(),                             // Date
-                    parts[5].trim(),                             // Time
-                    getUserName(parts[2].trim()),                // Doctor Name
-                    getUserName(parts[3].trim()),                // Nurse Name
-                    parts.length > 6 ? parts[6].trim() : "",    // Appointment Type
-                    parts.length > 8 ? parts[8].trim() : "",    // Reason
-                    parts.length > 7 ? parts[7].trim() : ""     // Status
-                });
+                // format: apptId[0],patientId[1],doctorId[2],nurseId[3],date[4],time[5],type[6],status[7],reason[8]
+                String status = parts.length > 7 ? parts[7].trim() : "";
+                if (selectedStatus.equals("All") || status.equalsIgnoreCase(selectedStatus)) {
+                    model.addRow(new String[]{
+                        parts[0].trim(), // Appt ID
+                        parts[4].trim(), // Date
+                        parts[5].trim(), // Time
+                        getUserName(parts[2].trim()), // Doctor Name
+                        getUserName(parts[3].trim()), // Nurse Name
+                        parts.length > 6 ? parts[6].trim() : "", // Appointment Type
+                        parts.length > 8 ? parts[8].trim() : "", // Reason
+                        parts.length > 7 ? parts[7].trim() : "" // Status
+                    });
+                }
             }
-        }
 
-        if (model.getRowCount() == 0) {
+            if (model.getRowCount() == 0) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "No appointments found for status: " + selectedStatus);
+            }
+
+        } catch (java.io.IOException e) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                "No appointments found for status: " + selectedStatus);
+                    "Error: " + e.getMessage());
         }
-
-    } catch (java.io.IOException e) {
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Error: " + e.getMessage());
-    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
     public javax.swing.table.DefaultTableModel getTableModel() {
-    return model;
-}
+        return model;
+    }
+
     /**
      * @param args the command line arguments
      */
